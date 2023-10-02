@@ -3,5 +3,17 @@
     <style name="Base.Theme.WeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
+
+    <style name="Base.Theme.WeatherApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Base.Theme.WeatherApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
+
+    <style name="Base.Theme.WeatherApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>
