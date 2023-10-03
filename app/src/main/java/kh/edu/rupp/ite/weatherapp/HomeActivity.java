@@ -17,6 +17,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding binding;
 
+    String APIKey = "0c443c4fff4c49c78f63fb65a3588bed";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_WeatherApp);
