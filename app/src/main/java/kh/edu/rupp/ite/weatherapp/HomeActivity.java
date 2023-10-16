@@ -17,7 +17,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding binding;
 
-    String APIKey = "0c443c4fff4c49c78f63fb65a3588bed";
+    String APIKey = "25714936cd1e401ea1270735231610";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
