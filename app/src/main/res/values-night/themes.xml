@@ -6,22 +6,14 @@
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:label">@color/white</item>
     </style>
 
-    <style name="Theme.WeatherApp.NoActionBar">
+    <style name="Base.Theme.WeatherApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Base.Theme.WeatherApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
 
-    <style name="Base.Theme.WeatherApp.AppBarOverlay">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="Base.Theme.WeatherApp.PopupOverlay">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-    </style>
+    <style name="Base.Theme.WeatherApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>
