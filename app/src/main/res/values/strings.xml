@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">WeatherApp</string>
     <string name="title_activity_home">Welcome!</string>
+    <string name="celcius">27°C</string>
+    <string name="location">Phnom Penh, Cambodia</string>
+    <string name="updated">Just Updated</string>
+    <string name="details">Details</string>
+    <string name="max">Max | Min</string>
+    <string name="percentage">80% Chance</string>
+    <string name="speed">9km/h</string>
+    <string name="wind">Wind Speed</string>
+    <string name="hourly">Hourly Forecast</string>
+    <string name="now">Now</string>
+    <string name="ten">10 AM</string>
+    <string name="eleven">11 AM</string>
+    <string name="twelve">12 AM</string>
+    <string name="one">1 PM</string>
+    <string name="two">2 PM</string>
+    <string name="three">3 PM</string>
+    <string name="cel">28°C</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
