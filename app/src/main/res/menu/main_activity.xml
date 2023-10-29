@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuHome"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home_foreground"
+        />
+    <item
+        android:id="@+id/menuLocation"
+        android:title="@string/location"
+        android:icon="@drawable/ic_location_foreground"
+        />
+    <item
+        android:id="@+id/menuSetting"
+        android:title="@string/setting"
+        android:icon="@drawable/ic_setting_foreground"
+        />
+</menu>

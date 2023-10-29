@@ -26,7 +26,7 @@ public class LoadingActivity extends AppCompatActivity {
                 .into(gifImageView);
 
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }, 2000);
     }
