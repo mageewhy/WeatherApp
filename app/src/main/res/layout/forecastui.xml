@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -18,52 +19,53 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text1"
+                android:id="@+id/tempBig"
                 android:layout_width="120dp"
                 android:layout_height="70dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="15dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/celcius"
-                android:textSize="50dp"
-                android:textStyle="bold"/>
+                android:textSize="50sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/image1"
+                android:id="@+id/location_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/text1"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@mipmap/ic_location_foreground"/>
+                android:src="@mipmap/ic_location_foreground"
+                app:layout_constraintBottom_toBottomOf="@+id/location"
+                app:layout_constraintStart_toStartOf="@+id/tempBig"
+                app:layout_constraintTop_toBottomOf="@+id/tempBig" />
 
             <TextView
-                android:id="@+id/text2"
+                android:id="@+id/location"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                app:layout_constraintStart_toEndOf="@id/image1"
-                app:layout_constraintTop_toBottomOf="@id/text1"
-                android:layout_marginTop="14dp"
-                android:text="@string/location"/>
+                android:gravity="center_vertical"
+                android:text="@string/location"
+                app:layout_constraintStart_toEndOf="@+id/location_img"
+                app:layout_constraintTop_toBottomOf="@+id/tempBig" />
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/image2"
+                android:id="@+id/updated_status_img"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:layout_constraintTop_toBottomOf="@id/image1"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_checked"/>
+                android:src="@mipmap/ic_checked"
+                app:layout_constraintBottom_toBottomOf="@+id/updated_status"
+                app:layout_constraintEnd_toStartOf="@+id/updated_status"
+                app:layout_constraintStart_toStartOf="@+id/location_img"
+                app:layout_constraintTop_toBottomOf="@+id/location_img" />
 
             <TextView
+                android:id="@+id/updated_status"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/image1"
-                app:layout_constraintStart_toEndOf="@id/image2"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="7dp"
-                android:text="@string/updated"/>
+                android:gravity="center_vertical"
+                android:text="@string/updated"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toBottomOf="@+id/location" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,7 +85,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text3"
+                android:id="@+id/details"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -91,76 +93,76 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:text="@string/details"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/image3"
+                android:id="@+id/temp_detail_icon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:layout_constraintTop_toBottomOf="@id/text3"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/details"
+                app:layout_constraintStart_toStartOf="@id/details"
                 android:src="@mipmap/ic_thermometer"/>
 
             <TextView
-                android:id="@+id/text4"
+                android:id="@+id/temp_text"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/text3"
-                app:layout_constraintStart_toEndOf="@id/image3"
-                android:layout_marginTop="20dp"
-                android:text="@string/max"/>
+                android:gravity="center_vertical"
+                android:text="@string/max"
+                app:layout_constraintBottom_toBottomOf="@+id/temp_detail_icon"
+                app:layout_constraintStart_toEndOf="@id/temp_detail_icon"
+                app:layout_constraintTop_toTopOf="@id/temp_detail_icon" />
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/image4"
+                android:id="@+id/rain_chance_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
                 android:src="@mipmap/ic_rain"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image3"
-                android:layout_marginTop="5dp"/>
+                app:layout_constraintEnd_toEndOf="@+id/temp_detail_icon"
+                app:layout_constraintStart_toStartOf="@id/temp_detail_icon"
+                app:layout_constraintTop_toBottomOf="@id/temp_detail_icon" />
 
             <TextView
-                android:id="@+id/text5"
-                android:layout_width="50dp"
+                android:id="@+id/rain_chance"
+                android:layout_width="100dp"
                 android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/image3"
-                app:layout_constraintStart_toEndOf="@id/image4"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="5dp"
-                android:text="@string/percentage"/>
+                android:gravity="center_vertical"
+                android:text="@string/percentage"
+                app:layout_constraintEnd_toEndOf="@+id/temp_text"
+                app:layout_constraintStart_toEndOf="@id/rain_chance_icon"
+                app:layout_constraintTop_toTopOf="@id/rain_chance_icon" />
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/image5"
+                android:id="@+id/wind_speed_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/text3"
-                app:layout_constraintStart_toEndOf="@id/text4"
-                android:layout_marginStart="90dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@id/wind_speed"
+                app:layout_constraintTop_toTopOf="@id/temp_detail_icon"
+                app:layout_constraintBottom_toBottomOf="@id/temp_detail_icon"
                 android:src="@mipmap/ic_wind"/>
 
             <TextView
-                android:id="@+id/text6"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
-                app:layout_constraintStart_toEndOf="@id/image5"
-                app:layout_constraintTop_toBottomOf="@id/text3"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/speed"/>
-
-            <TextView
-                android:id="@+id/text7"
+                android:id="@+id/wind_speed"
                 android:layout_width="80dp"
                 android:layout_height="20dp"
-                app:layout_constraintTop_toBottomOf="@id/text6"
-                app:layout_constraintStart_toEndOf="@id/image5"
-                android:layout_marginStart="5dp"
+                app:layout_constraintTop_toTopOf="@id/wind_speed_icon"
+                app:layout_constraintBottom_toBottomOf="@id/wind_speed_icon"
+                app:layout_constraintEnd_toStartOf="@id/wind_speed_unit"
                 android:text="@string/wind"/>
+
+            <TextView
+                android:id="@+id/wind_speed_unit"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toTopOf="@id/wind_speed"
+                app:layout_constraintBottom_toBottomOf="@id/wind_speed"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/speed"/>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -180,11 +182,11 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text8"
+                android:id="@+id/hourly_forecast"
                 android:layout_width="220dp"
                 android:layout_height="40dp"
                 android:text="@string/hourly"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="10dp"
@@ -193,19 +195,20 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                app:layout_constraintTop_toBottomOf="@id/text8"
+                app:layout_constraintTop_toBottomOf="@id/hourly_forecast"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="15dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/text9"
+                        android:id="@+id/now"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/now"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -213,184 +216,204 @@
                         android:layout_marginTop="5dp"/>
 
                     <ImageView
-                        android:id="@+id/image6"
+                        android:id="@+id/now_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_sunny"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="10dp"/>
+                        android:foregroundGravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/now"
+                        app:layout_constraintStart_toStartOf="@id/now"
+                        app:layout_constraintEnd_toEndOf="@id/now"/>
                     <TextView
-                        android:id="@+id/text10"
+                        android:id="@+id/now_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image6"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="15dp"/>
+                        android:gravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/now_icon"
+                        app:layout_constraintStart_toStartOf="@id/now_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_icon"/>
 
                     <TextView
-                        android:id="@+id/text11"
+                        android:id="@+id/now_1"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:text="@string/ten"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/text9"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toTopOf="@id/now"
+                        app:layout_constraintBottom_toBottomOf="@id/now"
+                        app:layout_constraintStart_toEndOf="@id/now"/>
 
                     <ImageView
-                        android:id="@+id/image7"
+                        android:id="@+id/now_1_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_cloudy"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toEndOf="@id/image6"
-                        android:layout_marginStart="15dp"/>
+                        android:foregroundGravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/now_1"
+                        app:layout_constraintStart_toStartOf="@id/now_1"
+                        app:layout_constraintEnd_toEndOf="@id/now_1"/>
                     <TextView
-                        android:id="@+id/text12"
+                        android:id="@+id/now_1_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image6"
-                        app:layout_constraintStart_toEndOf="@id/text10"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_1_icon"
+                        app:layout_constraintStart_toStartOf="@id/now_1_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_1_icon"/>
 
                     <TextView
-                        android:id="@+id/text13"
+                        android:id="@+id/now_2"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:text="@string/eleven"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/text11"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toTopOf="@id/now_1"
+                        app:layout_constraintStart_toEndOf="@id/now_1"
+                        app:layout_constraintBottom_toBottomOf="now_1"
+                        />
 
                     <ImageView
-                        android:id="@+id/image8"
+                        android:id="@+id/now_2_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:foregroundGravity="center"
                         android:src="@mipmap/ic_rain"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toEndOf="@id/image7"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_2"
+                        app:layout_constraintStart_toStartOf="@id/now_2"
+                        app:layout_constraintEnd_toEndOf="@id/now_2"/>
                     <TextView
-                        android:id="@+id/text14"
+                        android:id="@+id/now_2_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image7"
-                        app:layout_constraintStart_toEndOf="@id/text12"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintStart_toStartOf="@id/now_2_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_2_icon"
+                        app:layout_constraintTop_toBottomOf="@id/now_2_icon"/>
 
                     <TextView
-                        android:id="@+id/text15"
+                        android:id="@+id/now_3"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
                         android:text="@string/twelve"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/text13"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toTopOf="@id/now_2"
+                        app:layout_constraintStart_toEndOf="@id/now_2"
+                        app:layout_constraintBottom_toBottomOf="@id/now_2"
+                        android:gravity="center"
+                        android:layout_marginStart="15dp"/>
 
                     <ImageView
-                        android:id="@+id/image9"
+                        android:id="@+id/now_3_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@mipmap/ic_rain"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toEndOf="@id/image8"
-                        android:layout_marginStart="15dp"/>
+                        android:foregroundGravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/now_3"
+                        app:layout_constraintStart_toStartOf="@id/now_3"
+                        app:layout_constraintEnd_toEndOf="@id/now_3"
+                        android:src="@mipmap/ic_rain"/>
                     <TextView
-                        android:id="@+id/text16"
+                        android:id="@+id/now_3_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image8"
-                        app:layout_constraintStart_toEndOf="@id/text14"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_3_icon"
+                        app:layout_constraintStart_toStartOf="@id/now_3_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_3"/>
 
                     <TextView
-                        android:id="@+id/text17"
+                        android:id="@+id/now_4"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/one"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/text15"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toTopOf="@id/now_3"
+                        app:layout_constraintStart_toEndOf="@id/now_3"
+                        app:layout_constraintBottom_toBottomOf="@id/now_3"
+                        android:layout_marginStart="15dp"/>
 
                     <ImageView
-                        android:id="@+id/image10"
+                        android:id="@+id/now_4_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:foregroundGravity="center"
                         android:src="@mipmap/ic_storm"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toEndOf="@id/image9"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_4"
+                        app:layout_constraintStart_toStartOf="@id/now_4"
+                        app:layout_constraintEnd_toEndOf="@id/now_4"/>
                     <TextView
-                        android:id="@+id/text18"
+                        android:id="@+id/now_4_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image8"
-                        app:layout_constraintStart_toEndOf="@id/text16"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_4_icon"
+                        app:layout_constraintStart_toStartOf="@id/now_4_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_4_icon"/>
 
                     <TextView
-                        android:id="@+id/text19"
+                        android:id="@+id/now_5"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/two"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/text17"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toTopOf="@id/now_4"
+                        app:layout_constraintStart_toEndOf="@id/now_4"
+                        app:layout_constraintBottom_toBottomOf="@id/now_4"
+                        android:layout_marginStart="15dp"/>
 
                     <ImageView
-                        android:id="@+id/image11"
+                        android:id="@+id/now_5_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:foregroundGravity="center"
                         android:src="@mipmap/ic_storm"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toEndOf="@id/image10"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_5"
+                        app:layout_constraintStart_toStartOf="@id/now_5"
+                        app:layout_constraintEnd_toEndOf="@id/now_5"/>
                     <TextView
-                        android:id="@+id/text20"
+                        android:id="@+id/now_5_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image8"
-                        app:layout_constraintStart_toEndOf="@id/text18"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_5_icon"
+                        app:layout_constraintStart_toStartOf="@id/now_5_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_5_icon"/>
 
                     <TextView
-                        android:id="@+id/text21"
+                        android:id="@+id/now_6"
                         android:layout_width="45dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/three"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/text19"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toTopOf="now_5"
+                        app:layout_constraintStart_toEndOf="@id/now_5"
+                        app:layout_constraintBottom_toBottomOf="@id/now_5"
+                        android:layout_marginStart="15dp"/>
 
                     <ImageView
-                        android:id="@+id/image12"
+                        android:id="@+id/now_6_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:foregroundGravity="center"
                         android:src="@mipmap/ic_storm"
-                        app:layout_constraintTop_toBottomOf="@id/text9"
-                        app:layout_constraintStart_toEndOf="@id/image11"
-                        android:layout_marginStart="15dp"/>
+                        app:layout_constraintTop_toBottomOf="@id/now_6"
+                        app:layout_constraintStart_toStartOf="@id/now_6"
+                        app:layout_constraintEnd_toEndOf="@id/now_6"/>
                     <TextView
-                        android:id="@+id/text22"
+                        android:id="@+id/now_6_temp"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
+                        android:gravity="center"
                         android:text="@string/cel"
-                        app:layout_constraintTop_toBottomOf="@id/image8"
-                        app:layout_constraintStart_toEndOf="@id/text20"
-                        android:layout_marginStart="15dp"/>
-
+                        app:layout_constraintTop_toBottomOf="@id/now_6_icon"
+                        app:layout_constraintStart_toStartOf="@id/now_6_icon"
+                        app:layout_constraintEnd_toEndOf="@id/now_6_icon"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
