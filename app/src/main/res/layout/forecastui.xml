@@ -273,7 +273,7 @@
                         android:text="@string/eleven"
                         app:layout_constraintTop_toTopOf="@id/now_1"
                         app:layout_constraintStart_toEndOf="@id/now_1"
-                        app:layout_constraintBottom_toBottomOf="now_1"
+                        app:layout_constraintBottom_toBottomOf="@id/now_1"
                         />
 
                     <ImageView
@@ -391,7 +391,7 @@
                         android:layout_height="20dp"
                         android:gravity="center"
                         android:text="@string/three"
-                        app:layout_constraintTop_toTopOf="now_5"
+                        app:layout_constraintTop_toTopOf="@id/now_5"
                         app:layout_constraintStart_toEndOf="@id/now_5"
                         app:layout_constraintBottom_toBottomOf="@id/now_5"
                         android:layout_marginStart="15dp"/>

@@ -20,10 +20,11 @@
 
             <TextView
                 android:id="@+id/tempBig"
-                android:layout_width="120dp"
+                android:layout_width="130dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="@string/celcius"
                 android:textSize="50sp"
                 android:textStyle="bold"
@@ -34,7 +35,7 @@
                 android:id="@+id/location_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@mipmap/ic_location_foreground"
+                android:src="@drawable/location_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/location"
                 app:layout_constraintStart_toStartOf="@+id/tempBig"
                 app:layout_constraintTop_toBottomOf="@+id/tempBig" />
@@ -52,7 +53,7 @@
                 android:id="@+id/updated_status_img"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@mipmap/ic_checked"
+                android:src="@drawable/updated_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/updated_status"
                 app:layout_constraintEnd_toStartOf="@+id/updated_status"
                 app:layout_constraintStart_toStartOf="@+id/location_img"
@@ -98,8 +99,8 @@
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/temp_detail_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/details"
                 app:layout_constraintStart_toStartOf="@id/details"
                 android:src="@mipmap/ic_thermometer"/>
@@ -273,7 +274,7 @@
                         android:text="@string/eleven"
                         app:layout_constraintTop_toTopOf="@id/now_1"
                         app:layout_constraintStart_toEndOf="@id/now_1"
-                        app:layout_constraintBottom_toBottomOf="now_1"
+                        app:layout_constraintBottom_toBottomOf="@id/now_1"
                         />
 
                     <ImageView
@@ -391,7 +392,7 @@
                         android:layout_height="20dp"
                         android:gravity="center"
                         android:text="@string/three"
-                        app:layout_constraintTop_toTopOf="now_5"
+                        app:layout_constraintTop_toTopOf="@id/now_5"
                         app:layout_constraintStart_toEndOf="@id/now_5"
                         app:layout_constraintBottom_toBottomOf="@id/now_5"
                         android:layout_marginStart="15dp"/>
