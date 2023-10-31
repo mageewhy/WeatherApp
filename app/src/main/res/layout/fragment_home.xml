@@ -16,7 +16,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <TextView
                 android:id="@+id/tempBig"
@@ -42,12 +43,13 @@
 
             <TextView
                 android:id="@+id/location"
-                android:layout_width="160dp"
+                android:layout_width="140dp"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:text="@string/location"
                 app:layout_constraintStart_toEndOf="@+id/location_img"
-                app:layout_constraintTop_toBottomOf="@+id/tempBig" />
+                app:layout_constraintTop_toBottomOf="@+id/tempBig"
+                app:layout_constraintEnd_toStartOf="@id/dynamic_icon"/>
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/updated_status_img"
@@ -67,6 +69,15 @@
                 android:text="@string/updated"
                 app:layout_constraintStart_toStartOf="@+id/location"
                 app:layout_constraintTop_toBottomOf="@+id/location" />
+
+            <ImageView
+                android:id="@+id/dynamic_icon"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:srcCompat="@mipmap/ic_rain"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
