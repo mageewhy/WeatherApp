@@ -1,6 +1,8 @@
 package kh.edu.rupp.ite.weatherapp.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +66,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void ShowWeather(Weather weather) {
-
+        binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_c()) + "°C");
+        binding.location.setText(weather.getLocation().getName() + ", " + weather.getLocation().getCountry());
+        binding.updatedStatus.setText(weather.getCurrent().getLastUpdated());
     }
 
 }

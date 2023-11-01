@@ -2,6 +2,7 @@
     <string name="app_name">WeatherApp</string>
     <string name="title_activity_home">Welcome!</string>
     <string name="celcius">27°C</string>
+<!--    <string name="location">Phnom Penh, Cambodia</string>-->
     <string name="updated">Just Updated</string>
     <string name="details">Details</string>
     <string name="max">Max | Min</string>
