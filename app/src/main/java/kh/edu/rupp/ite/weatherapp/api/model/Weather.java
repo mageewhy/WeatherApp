@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Weather {
     private Location location;
     private Current current;
+    private Forecast forecast;
 
     public Location getLocation() {
         return location;
@@ -23,6 +24,14 @@ public class Weather {
 
     public void setCurrent(Current current) {
         this.current = current;
+    }
+
+    public Forecast getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(Forecast forecast) {
+        this.forecast = forecast;
     }
 }
 

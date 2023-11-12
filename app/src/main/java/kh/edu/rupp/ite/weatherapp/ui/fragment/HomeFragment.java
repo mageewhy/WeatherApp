@@ -71,6 +71,11 @@ public class HomeFragment extends Fragment {
         binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_c()) + "°C");
         binding.location.setText(weather.getLocation().getName() + ", " + weather.getLocation().getCountry());
         binding.updatedStatus.setText(weather.getCurrent().getLastUpdated());
+
+        binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c()) + "°C");
+
+        binding.windSpeed.setText(Float.toString(weather.getCurrent().getWind_kph()));
+        binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().getDay().getDaily_chance_of_rain()) + "% Chance");
     }
 
 }

@@ -14,7 +14,7 @@ public class Current {
     @SerializedName("wind_kph")
     private float wind_kph;
     @SerializedName("cloud")
-    private float cloud;
+    private int cloud;
 
 
     public String getLastUpdated() {
@@ -57,11 +57,11 @@ public class Current {
         this.wind_kph = wind_kph;
     }
 
-    public float getCloud() {
+    public int getCloud() {
         return cloud;
     }
 
-    public void setCloud(float cloud) {
+    public void setCloud(int cloud) {
         this.cloud = cloud;
     }
 }
