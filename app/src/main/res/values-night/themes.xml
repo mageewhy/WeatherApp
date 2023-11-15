@@ -8,6 +8,19 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="Main.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@color/bg_testing</item>
+    </style>
+
+    <style name="Navigation.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="itemIconTint">@color/teal_200</item>
+        <item name="itemTextColor">@color/teal_200</item>
+    </style>
+
     <style name="Base.Theme.WeatherApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

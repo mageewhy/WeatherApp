@@ -3,11 +3,24 @@
     <style name="Base.Theme.WeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.WeatherApp" parent="Base.Theme.WeatherApp" />
+    <style name="Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Main.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@color/bg_testing</item>
+
+    </style>
+
+    <style name="Navigation.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="itemIconTint">@color/teal_700</item>
+        <item name="itemTextColor">@color/teal_700</item>
+    </style>
 
     <style name="Theme.WeatherApp.NoActionBar">
         <item name="windowActionBar">false</item>
