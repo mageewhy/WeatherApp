@@ -13,8 +13,13 @@
     </style>
 
     <style name="Main.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
-        <item name="android:background">@color/bg_testing</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/black</item>
 
+    </style>
+
+    <style name="String.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Navigation.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
