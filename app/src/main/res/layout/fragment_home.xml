@@ -211,7 +211,7 @@
                         android:layout_width="@dimen/detail_icon_size"
                         android:layout_height="@dimen/detail_icon_size"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/rain"
+                        android:src="@drawable/rain_chance"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
