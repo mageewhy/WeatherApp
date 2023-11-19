@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/NoActionBar.Theme.WeatherApp"
     android:background="@drawable/card_view_dropshadow">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:theme="@style/Main.Theme.WeatherApp"
+        android:theme="@style/Base.Theme.WeatherApp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +63,7 @@
         android:paddingEnd="15dp"
         android:paddingStart="0dp"
         android:paddingBottom="15dp"
-        android:theme="@style/Main.Theme.WeatherApp"
+        android:theme="@style/Base.Theme.WeatherApp"
         app:layout_constraintVertical_bias="1">
 
         <ImageView

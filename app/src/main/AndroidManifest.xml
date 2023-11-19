@@ -15,17 +15,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WeatherApp"
+        android:theme="@style/Base.Theme.WeatherApp"
         tools:targetApi="31" >
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.WeatherApp.NoActionBar" />
+            android:theme="@style/Base.Theme.WeatherApp" />
         <activity
             android:name=".LoadingActivity"
             android:exported="true"
-            android:theme="@style/Theme.WeatherApp.NoActionBar" >
+            android:theme="@style/Base.Theme.WeatherApp" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Main.Theme.WeatherApp"
-    android:background="@drawable/sun_wallpaper"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -12,8 +11,10 @@
         android:id="@+id/show_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/NoActionBar.Theme.WeatherApp"
         android:paddingTop="20dp"
-        android:paddingRight="50dp"
+        android:paddingEnd="50dp"
+        android:paddingStart="0dp"
         android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,6 @@
             android:id="@+id/weather_showing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,12 +32,10 @@
                 android:id="@+id/tempBig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
                 android:gravity="center"
                 android:text="@string/celcius"
                 android:textSize="@dimen/temp_text_size"
                 android:textStyle="bold"
-                android:theme="@style/String.Theme.WeatherApp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/dynamic_icon"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +45,6 @@
                 android:id="@+id/dynamic_icon"
                 android:layout_width="@dimen/temp_icon_size"
                 android:layout_height="@dimen/temp_icon_size"
-                android:background="@color/transparent"
                 android:src="@drawable/sun"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +57,6 @@
             android:id="@+id/location_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
             app:layout_constraintEnd_toEndOf="@+id/weather_showing"
             app:layout_constraintStart_toStartOf="@+id/weather_showing"
             app:layout_constraintTop_toBottomOf="@+id/weather_showing">
@@ -127,6 +123,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/NoActionBar.Theme.WeatherApp"
         app:layout_constraintTop_toBottomOf="@id/show_main"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -159,7 +156,6 @@
 
                 <TextView
                     android:id="@+id/details"
-                    android:theme="@style/Main.Theme.WeatherApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
@@ -299,14 +295,12 @@
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:theme="@style/Main.Theme.WeatherApp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"/>
 
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/Main.Theme.WeatherApp"
                     app:layout_constraintTop_toBottomOf="@id/hourly_forecast"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -315,9 +309,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:theme="@style/Main.Theme.WeatherApp"
-                        >
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/now"

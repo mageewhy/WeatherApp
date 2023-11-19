@@ -16,11 +16,13 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/main_activity"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:backgroundTint="@color/transparent"
+        app:itemBackground="@color/transparent"
+        android:background="@drawable/card_view_dropshadow"
+        app:itemIconSize="30dp"
+
         />
 
 </LinearLayout>
