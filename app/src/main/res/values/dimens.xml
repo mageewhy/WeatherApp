@@ -10,4 +10,12 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="detail_icon_size">30dp</dimen>
+
+    <!--    recycler Location UI-->
+    <dimen name="rcy_icon_size">55dp</dimen>
+    <dimen name="rcy_temp_size">35sp</dimen>
+    <dimen name="rcy_location_text">35sp</dimen>
+    <dimen name="rcy_country">20sp</dimen>
+    <dimen name="rcy_date_time">20sp</dimen>
+
 </resources>
