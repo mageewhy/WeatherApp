@@ -4,26 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Main.Theme.WeatherApp"
+    android:background="@drawable/morning_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:padding="10dp"
         android:theme="@style/NoActionBar.Theme.WeatherApp"
-        android:paddingTop="20dp"
-        android:paddingEnd="50dp"
-        android:paddingStart="0dp"
-        android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="@id/show_main"
+            app:layout_constraintBottom_toBottomOf="@id/show_main"
+            app:layout_constraintStart_toStartOf="@id/show_main"
+            app:layout_constraintEnd_toEndOf="@id/show_main"
+            android:theme="@style/CardView.Theme.WeatherApp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/weather_showing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,8 +44,7 @@
                 android:text="@string/celcius"
                 android:textSize="@dimen/temp_text_size"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/dynamic_icon"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,10 +52,11 @@
                 android:id="@+id/dynamic_icon"
                 android:layout_width="@dimen/temp_icon_size"
                 android:layout_height="@dimen/temp_icon_size"
-                android:src="@drawable/sun"
+                android:src="@drawable/moon"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/tempBig" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -59,7 +67,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/weather_showing"
             app:layout_constraintStart_toStartOf="@+id/weather_showing"
-            app:layout_constraintTop_toBottomOf="@+id/weather_showing">
+            app:layout_constraintBottom_toTopOf="@+id/just_updated_lyt">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/location_img"
@@ -86,13 +94,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/just_updated_lyt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:background="@color/transparent"
             app:layout_constraintEnd_toEndOf="@+id/weather_showing"
             app:layout_constraintStart_toStartOf="@+id/weather_showing"
-            app:layout_constraintTop_toBottomOf="@+id/location_show">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/updated_status_img"
@@ -122,11 +131,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:theme="@style/NoActionBar.Theme.WeatherApp"
         app:layout_constraintTop_toBottomOf="@id/show_main"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:scrollbars="none"
         android:orientation="vertical">
 
@@ -142,7 +152,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/card_view_dropshadow"
+            android:theme="@style/CardView.Theme.WeatherApp"
             android:layout_margin="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -150,24 +160,27 @@
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:padding="20dp">
 
                 <TextView
                     android:id="@+id/details"
+                    android:background="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/details"
-                    android:textSize="@dimen/temp_text_size"
+                    android:textSize="@dimen/text_size_title"
                     android:textStyle="bold"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/min_max_const"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/details"
                     app:layout_constraintStart_toStartOf="@id/details">
 
@@ -175,6 +188,7 @@
                         android:id="@+id/temp_detail_icon"
                         android:layout_width="@dimen/detail_icon_size"
                         android:layout_height="@dimen/detail_icon_size"
+                        android:background="@color/transparent"
                         android:adjustViewBounds="true"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -186,6 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:gravity="center_vertical"
+                        android:background="@color/transparent"
                         android:text="@string/max"
                         app:layout_constraintBottom_toBottomOf="@+id/temp_detail_icon"
                         app:layout_constraintStart_toEndOf="@id/temp_detail_icon"
@@ -198,6 +213,7 @@
                     android:id="@+id/rain_chance_const"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/transparent"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/min_max_const">
@@ -206,6 +222,7 @@
                         android:id="@+id/rain_chance_icon"
                         android:layout_width="@dimen/detail_icon_size"
                         android:layout_height="@dimen/detail_icon_size"
+                        android:background="@color/transparent"
                         android:adjustViewBounds="true"
                         android:src="@drawable/rain_chance"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -219,6 +236,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:text="@string/percentage"
+                        android:background="@color/transparent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/rain_chance_icon"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -228,12 +246,14 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/wind_const"
                     android:layout_width="wrap_content"
+                    android:background="@color/transparent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/min_max_const">
 
                     <ImageView
                         android:id="@+id/wind_speed_icon"
+                        android:background="@color/transparent"
                         android:layout_width="@dimen/detail_icon_size"
                         android:layout_height="@dimen/detail_icon_size"
                         android:adjustViewBounds="true"
@@ -244,6 +264,7 @@
 
                     <TextView
                         android:id="@+id/wind_speed"
+                        android:background="@color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/wind"
@@ -253,6 +274,7 @@
 
                     <TextView
                         android:id="@+id/wind_speed_unit"
+                        android:background="@color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/speed"
@@ -273,13 +295,14 @@
             app:layout_constraintTop_toBottomOf="@id/details_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/card_view_dropshadow"
+            android:theme="@style/CardView.Theme.WeatherApp"
             android:layout_margin="10dp"
             app:cardBackgroundColor="@color/transparent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/transparent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -290,8 +313,9 @@
                     android:id="@+id/hourly_forecast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/transparent"
                     android:text="@string/hourly"
-                    android:textSize="@dimen/temp_text_size"
+                    android:textSize="@dimen/text_size_title"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -301,6 +325,7 @@
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/hourly_forecast"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -309,13 +334,15 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent">
 
                         <TextView
                             android:id="@+id/now"
                             android:layout_width="40dp"
                             android:layout_height="20dp"
                             android:gravity="center"
+                            android:background="@color/transparent"
                             android:text="@string/now"
                             android:textSize="@dimen/text_size"
                             app:layout_constraintTop_toTopOf="parent"
@@ -328,6 +355,7 @@
                             android:layout_width="@dimen/detail_icon_size"
                             android:layout_height="@dimen/detail_icon_size"
                             android:src="@drawable/moon"
+                            android:background="@color/transparent"
                             android:foregroundGravity="center"
                             app:layout_constraintTop_toBottomOf="@id/now"
                             app:layout_constraintStart_toStartOf="@id/now"
@@ -338,10 +366,16 @@
                             android:layout_height="wrap_content"
                             android:text="@string/cel"
                             android:gravity="center"
+                            android:background="@color/transparent"
                             android:textSize="@dimen/text_size"
                             app:layout_constraintTop_toBottomOf="@id/now_icon"
                             app:layout_constraintStart_toStartOf="@id/now_icon"
                             app:layout_constraintEnd_toEndOf="@id/now_icon"/>
+
+
+
+
+
 
                         <TextView
                             android:id="@+id/now_1"

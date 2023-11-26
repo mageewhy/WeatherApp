@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_view_outside_w" /> <!-- Set the color for the shadow -->
+            <corners android:radius="10dp" /> <!-- Set the desired radius for rounded corners -->
+        </shape>
+    </item>
+
+    <!-- Rounded Background -->
+    <item android:top="3dp" android:left="3dp" android:right="3dp" android:bottom="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_view_inside_w" /> <!-- Set your desired background color -->
+            <corners android:radius="10dp" /> <!-- Set the desired radius for rounded corners -->
+        </shape>
+    </item>
+
+</layer-list>

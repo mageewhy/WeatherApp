@@ -6,10 +6,19 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_bg">#252525</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_bg">#C6C6C6</color>
     <color name="bg_testing">#7BA4C4</color>
     <color name="transparent">#00000000 </color>
-    <color name="card_view_inside">#207E7E7E</color>
-    <color name="card_view_outside">#50000000</color>
+
+
+    <color name="card_view_outside_b">#7C505050</color>
+    <color name="card_view_inside_b">#251A1A1A</color>
+
+    <color name="card_view_outside_w">#3BFFFFFF</color>
+    <color name="card_view_inside_w">#8BCFCFCF</color>
+
+
 
 </resources>

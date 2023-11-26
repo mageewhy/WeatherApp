@@ -26,6 +26,28 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setSelectedItemId(R.id.menuHome);
         SetFragment(new HomeFragment());
 
+//        if(timeOfDay >= 8 && timeOfDay < 16){
+//
+//            //day
+//
+//        }else if(timeOfDay >= 16 && timeOfDay < 20){
+//
+//            //afternoon
+//
+//        }else if(timeOfDay >= 20 && timeOfDay < 24){
+//
+//            //night
+//
+//        }else if(timeOfDay>=0 && timeOfDay<4){
+//            //night
+//        }
+//
+//        else if(timeOfDay >= 4 && timeOfDay < 8){
+//
+//            //dawn
+//
+//        }
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.menuHome) {
                 SetFragment(new HomeFragment());
@@ -36,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
     }
 
     private void SetFragment(Fragment fragment) {

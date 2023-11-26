@@ -20,7 +20,7 @@
         app:menu="@menu/main_activity"
         app:backgroundTint="@color/transparent"
         app:itemBackground="@color/transparent"
-        android:background="@drawable/card_view_dropshadow"
+        android:background="@drawable/card_view_dropshadow_b"
         app:itemIconSize="30dp"
 
         />

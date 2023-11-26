@@ -2,9 +2,10 @@
     <dimen name="app_bar_height">320dp</dimen>
     <dimen name="app_bar_collapse_size">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="temp_text_size">35sp</dimen>
+    <dimen name="temp_text_size">45sp</dimen>
     <dimen name="text_size_title">25sp</dimen>
     <dimen name="text_size">13sp</dimen>
+    <dimen name="choose_location">20sp</dimen>
 
     <dimen name="temp_icon_size">100dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
