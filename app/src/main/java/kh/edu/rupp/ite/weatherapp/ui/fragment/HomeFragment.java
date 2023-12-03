@@ -32,6 +32,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Calendar;
+
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
@@ -39,8 +41,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-
-
         return binding.getRoot();
 
 

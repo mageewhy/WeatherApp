@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Calendar;
+
 import kh.edu.rupp.ite.weatherapp.databinding.ActivityMainBinding;
 import kh.edu.rupp.ite.weatherapp.ui.fragment.HomeFragment;
 import kh.edu.rupp.ite.weatherapp.ui.fragment.LocationFragment;
@@ -26,27 +28,24 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setSelectedItemId(R.id.menuHome);
         SetFragment(new HomeFragment());
 
-//        if(timeOfDay >= 8 && timeOfDay < 16){
-//
-//            //day
-//
-//        }else if(timeOfDay >= 16 && timeOfDay < 20){
-//
-//            //afternoon
-//
-//        }else if(timeOfDay >= 20 && timeOfDay < 24){
-//
-//            //night
-//
-//        }else if(timeOfDay>=0 && timeOfDay<4){
-//            //night
-//        }
-//
-//        else if(timeOfDay >= 4 && timeOfDay < 8){
-//
-//            //dawn
-//
-//        }
+        // Get the current hour of the day
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+        // Set the appropriate background based on the time of day
+        if (hourOfDay >= 6 && hourOfDay < 12) {
+            // Morning
+            findViewById(android.R.id.content).setBackgroundResource(R.drawable.morning_bg);
+        } else if (hourOfDay >= 12 && hourOfDay < 18) {
+            // Afternoon
+            findViewById(android.R.id.content).setBackgroundResource(R.drawable.afternoon_bg);
+        } else if (hourOfDay >= 18 && hourOfDay < 21) {
+            // Evening
+            findViewById(android.R.id.content).setBackgroundResource(R.drawable.evening_bg);
+        } else {
+            // Night
+            findViewById(android.R.id.content).setBackgroundResource(R.drawable.night_bg);
+        }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.menuHome) {
