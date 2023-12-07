@@ -1,16 +1,43 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.WeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.WeatherApp" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Base.Theme.WeatherApp.NoActionBar">
+    <style name="NoActionBar.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Main.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@color/black_bg</item>
+    </style>
+
+    <style name="CardView.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@drawable/card_view_dropshadow_b</item>
+    </style>
+
+    <style name="AddLocation.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="String.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+
+
+    </style>
+
+    <style name="Navigation.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
     </style>
 
     <style name="Base.Theme.WeatherApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />

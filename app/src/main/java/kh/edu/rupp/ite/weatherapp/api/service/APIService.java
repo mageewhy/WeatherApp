@@ -8,4 +8,5 @@ public interface APIService {
 
     @GET("/v1/forecast.json?key=25714936cd1e401ea1270735231610&q=Phnom%20Penh")
     Call<Weather> LoadWeather();
+
 }

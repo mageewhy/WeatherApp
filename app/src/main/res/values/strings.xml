@@ -22,4 +22,6 @@
     <string name="home">Home</string>
     <string name="location">Location</string>
     <string name="setting">Setting</string>
+
+    <string name="choose_location">Choose Location</string>
 </resources>
