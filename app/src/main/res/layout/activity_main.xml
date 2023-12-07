@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Navigation.Theme.WeatherApp">
 
     <FrameLayout
         android:id="@+id/layoutFragment"
@@ -15,11 +16,13 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemIconSize="32dp"
-        app:itemIconTint="@color/teal_700"
-        app:itemTextColor="@color/teal_700"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/main_activity" />
+        app:labelVisibilityMode="selected"
+        app:menu="@menu/main_activity"
+        app:backgroundTint="@color/transparent"
+        app:itemBackground="@color/transparent"
+        android:background="@drawable/card_view_dropshadow_b"
+        app:itemIconSize="30dp"
+
+        />
 
 </LinearLayout>
