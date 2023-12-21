@@ -12,12 +12,13 @@
     <color name="bg_testing">#7BA4C4</color>
     <color name="transparent">#00000000 </color>
 
+    <color name="search_view">#AB090909</color>
 
-    <color name="card_view_outside_b">#7C505050</color>
-    <color name="card_view_inside_b">#251A1A1A</color>
+<!--    <color name="card_view_outside_b">#7C505050</color>-->
+    <color name="card_view_inside_b">#BA090909</color>
 
-    <color name="card_view_outside_w">#3BFFFFFF</color>
-    <color name="card_view_inside_w">#8BCFCFCF</color>
+<!--    <color name="card_view_outside_w">#3BFFFFFF</color>-->
+    <color name="card_view_inside_w">#E2FFFFFF</color>
 
 
 

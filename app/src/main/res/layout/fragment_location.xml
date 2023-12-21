@@ -12,34 +12,33 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/transparent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:theme="@style/CustomSearchViewStyle"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:iconifiedByDefault="false"
+            android:theme="@style/CustomSearchViewStyle"
+            android:background="@drawable/searchview_background"
+            app:animateMenuItems="true"
+            app:queryBackground="@color/transparent"
+            app:queryHint="Choose Location"
+            app:searchIcon="@drawable/search_icon_foreground"
+            app:iconifiedByDefault="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/add_location"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            android:background="@color/transparent"
-            android:text="@string/choose_location"
-            android:textStyle="bold"
-            android:textSize="@dimen/choose_location"
-            android:theme="@style/AddLocation.Theme.WeatherApp"/>
-
-        <Button
-            android:id="@+id/add_location"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            android:background="@drawable/add_location"
-            android:theme="@style/AddLocation.Theme.WeatherApp"
-            />
+            app:flow_horizontalBias="1">
+
+            <EditText
+                android:id="@+id/search_src_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+
+        </androidx.appcompat.widget.SearchView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -57,6 +56,7 @@
         android:scrollbars="none">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/recyler_item"/>

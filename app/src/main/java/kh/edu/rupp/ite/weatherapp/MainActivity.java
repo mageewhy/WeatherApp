@@ -1,6 +1,9 @@
 package kh.edu.rupp.ite.weatherapp;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,24 +31,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setSelectedItemId(R.id.menuHome);
         SetFragment(new HomeFragment());
 
-        // Get the current hour of the day
-        Calendar calendar = Calendar.getInstance();
-        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
 
-        // Set the appropriate background based on the time of day
-        if (hourOfDay >= 6 && hourOfDay < 12) {
-            // Morning
-            findViewById(android.R.id.content).setBackgroundResource(R.drawable.morning_bg);
-        } else if (hourOfDay >= 12 && hourOfDay < 18) {
-            // Afternoon
-            findViewById(android.R.id.content).setBackgroundResource(R.drawable.afternoon_bg);
-        } else if (hourOfDay >= 18 && hourOfDay < 21) {
-            // Evening
-            findViewById(android.R.id.content).setBackgroundResource(R.drawable.evening_bg);
-        } else {
-            // Night
-            findViewById(android.R.id.content).setBackgroundResource(R.drawable.night_bg);
-        }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.menuHome) {
@@ -57,6 +43,33 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Get the current hour of the day
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+        // Set the appropriate background based on the time of day
+        ViewGroup rootView = findViewById(android.R.id.content);
+
+        if (hourOfDay >= 6 && hourOfDay < 12) {
+            // Morning
+            rootView.setBackgroundResource(R.drawable.morning);
+        } else if (hourOfDay >= 12 && hourOfDay < 18) {
+            // Afternoon
+            rootView.setBackgroundResource(R.drawable.afternoon);
+        } else if (hourOfDay >= 18 && hourOfDay < 21) {
+            // Evening
+            rootView.setBackgroundResource(R.drawable.evening);
+        } else {
+            // Night
+            rootView.setBackgroundResource(R.drawable.night);
+        }
 
     }
 
