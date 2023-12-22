@@ -1,6 +1,8 @@
 package kh.edu.rupp.ite.weatherapp.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +39,11 @@ import java.util.Calendar;
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
+    private String temp;
+    private String speed;
+
+    SharedPreferences sp;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +56,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sp = getActivity().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
+        this.temp = sp.getString("temp", "");
+        this.speed = sp.getString("speed", "");
 
         LoadWeatherFromServer();
     }
@@ -86,9 +96,18 @@ public class HomeFragment extends Fragment {
         binding.location.setText(weather.getLocation().getName() + ", " + weather.getLocation().getCountry());
         binding.updatedStatus.setText(weather.getCurrent().getLastUpdated());
 
-        binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c()) + "°C");
+        if (this.speed.equals("Km/h")) {
+            binding.windSpeed.setText(Float.toString(weather.getCurrent().getWind_kph()) + " Km/h");
+        } else {
+            binding.windSpeed.setText(Float.toString(weather.getCurrent().getWind_mph()) + " M/h");
+        }
 
-        binding.windSpeed.setText(Float.toString(weather.getCurrent().getWind_kph()));
+        if (this.temp.equals("°C")) {
+            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c()) + "°C");
+        } else {
+            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getAvgtemp_f())+ "°F | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_f()) + "°F");
+        }
+
         binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().getDay().getDaily_chance_of_rain()) + "% Chance");
     }
 

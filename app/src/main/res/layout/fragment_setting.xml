@@ -3,4 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/labelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="14dp"
+        android:text="Setting"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/tempSpinner"
+        android:layout_width="164dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/degree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/degree" />
+
+    <Spinner
+        android:id="@+id/windSpinner"
+        android:layout_width="164dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="16dp"
+        android:contextClickable="false"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/wind"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/wind" />
+
+    <TextView
+        android:id="@+id/degree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:text="Temperature Units"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/labelText"
+        app:layout_constraintTop_toBottomOf="@+id/labelText" />
+
+    <TextView
+        android:id="@+id/wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Wind Speed Units"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/degree"
+        app:layout_constraintTop_toBottomOf="@+id/degree" />
+</androidx.constraintlayout.widget.ConstraintLayout>
