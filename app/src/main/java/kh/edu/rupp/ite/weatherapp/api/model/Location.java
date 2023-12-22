@@ -23,4 +23,8 @@ public class Location {
     public void setCountry(String country) {
         this.country = country;
     }
+    @Override
+    public String toString() {
+        return name + ", " + country;
+    }
 }

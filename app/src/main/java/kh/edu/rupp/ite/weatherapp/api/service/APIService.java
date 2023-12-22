@@ -1,5 +1,8 @@
 package kh.edu.rupp.ite.weatherapp.api.service;
 
+import java.util.ArrayList;
+
+import kh.edu.rupp.ite.weatherapp.api.model.Location;
 import kh.edu.rupp.ite.weatherapp.api.model.Weather;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,6 +14,6 @@ public interface APIService {
     Call<Weather> LoadWeather();
 
     @GET("/v1/search.json")
-    Call<Weather> LoadLocationWeather(@Query("key") String key, @Query("q") String query);
+    Call<ArrayList<Location>> LoadLocationCity(@Query("key") String apiKey, @Query("q") String query);
 
 }

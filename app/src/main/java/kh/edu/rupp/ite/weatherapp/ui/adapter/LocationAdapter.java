@@ -4,10 +4,14 @@
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.TextView;
+    import android.widget.ArrayAdapter;
+    import android.widget.AdapterView;
+    import android.widget.AutoCompleteTextView;
 
     import androidx.annotation.NonNull;
     import androidx.recyclerview.widget.RecyclerView;
 
+    import java.util.ArrayList;
     import java.util.List;
 
     import kh.edu.rupp.ite.weatherapp.R;
@@ -34,12 +38,6 @@
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Weather weather = weatherList.get(position);
-            // Bind weather data to UI elements in recycler_item.xml
-            holder.locationNameTextView.setText(weather.getLocation().getName());
-            holder.countryNameTextView.setText(weather.getLocation().getCountry());
-//            holder.dateTimeZoneTextView.setText(weather.getDateTimeZone());
-//            holder.temperatureTextView.setText(weather.getTemperature());
-            // ...
         }
 
         @Override
@@ -56,6 +54,8 @@
         public static class ViewHolder extends RecyclerView.ViewHolder {
             TextView locationNameTextView;
             TextView countryNameTextView;
+
+            AutoCompleteTextView autoCompleteTextView;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);

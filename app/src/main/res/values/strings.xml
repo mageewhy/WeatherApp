@@ -24,4 +24,6 @@
     <string name="setting">Setting</string>
 
     <string name="choose_location">Choose Location</string>
+    <string name="manage_location">Manage Location</string>
+    <string name="search">Search Location: City Name</string>
 </resources>

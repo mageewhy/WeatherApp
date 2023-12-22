@@ -4,61 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Base.Theme.WeatherApp"
     android:padding="20dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_lyt"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:theme="@style/CustomSearchViewStyle"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/Add_Location"
+        app:layout_constraintHorizontal_bias="0"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_title"
+        android:text="@string/manage_location"/>
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:iconifiedByDefault="false"
-            android:theme="@style/CustomSearchViewStyle"
-            android:background="@drawable/searchview_background"
-            app:animateMenuItems="true"
-            app:queryBackground="@color/transparent"
-            app:queryHint="Choose Location"
-            app:searchIcon="@drawable/search_icon_foreground"
-            app:iconifiedByDefault="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:flow_horizontalBias="1">
+    <ImageButton
+        android:id="@+id/Add_Location"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        android:background="@color/transparent"
+        android:src="@drawable/search_icon_foreground"/>
 
-            <EditText
-                android:id="@+id/search_src_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
-
-        </androidx.appcompat.widget.SearchView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:theme="@style/NoActionBar.Theme.WeatherApp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/button_lyt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Add_Location"
         app:layout_constraintVertical_bias="0"
-        android:orientation="vertical"
-        android:scrollbars="none">
+        tools:listitem="@layout/recyler_item"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/recyler_item"/>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
