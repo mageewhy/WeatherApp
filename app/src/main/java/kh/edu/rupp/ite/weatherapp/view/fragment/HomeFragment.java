@@ -1,41 +1,33 @@
-package kh.edu.rupp.ite.weatherapp.ui.fragment;
+package kh.edu.rupp.ite.weatherapp.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
-import kh.edu.rupp.ite.weatherapp.R;
-import kh.edu.rupp.ite.weatherapp.api.model.Weather;
-import kh.edu.rupp.ite.weatherapp.api.service.APIService;
+import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Status;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
+import kh.edu.rupp.ite.weatherapp.model.api.service.APIService;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
+import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-
-import java.util.Calendar;
-
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
+
+    private WeatherViewModel viewModel = new WeatherViewModel();
 
     @Nullable
     @Override
@@ -50,35 +42,27 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LoadWeatherFromServer();
-    }
+        viewModel.LoadWeather();
 
-    private void LoadWeatherFromServer() {
-        Retrofit httpClient = new Retrofit.Builder()
-                .baseUrl("https://api.weatherapi.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        APIService apiService = httpClient.create(APIService.class);
-
-        Call<Weather> weather = apiService.LoadWeather();
-
-        weather.enqueue(new Callback<Weather>() {
+        viewModel.getWeatherData().observe(getViewLifecycleOwner(), new Observer<ApiData<Weather>>() {
             @Override
-            public void onResponse(Call<Weather> call, Response<Weather> response) {
-                if(response.isSuccessful()){
-                    ShowWeather(response.body());
-                }else{
-                    Toast.makeText(getContext(), "Received Failed" , Toast.LENGTH_LONG).show();
+            public void onChanged(ApiData<Weather> weatherApiData) {
+                switch (weatherApiData.getStatus()) {
+                    case PROCESSING:
+                        Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_LONG).show();
+                        break;
+                    case SUCCESS:
+                        ShowWeather(weatherApiData.getData());
+                        break;
+                    case ERROR:
+                        Toast.makeText(getContext(), "Received Failed", Toast.LENGTH_LONG).show();
+                        break;
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Weather> call, Throwable t) {
-                Toast.makeText(getContext(), "Received failed" + t, Toast.LENGTH_LONG).show();
             }
         });
     }
+
+
 
     @SuppressLint("SetTextI18n")
     private void ShowWeather(Weather weather) {

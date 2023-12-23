@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.weatherapp.ui.fragment;
+package kh.edu.rupp.ite.weatherapp.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import kh.edu.rupp.ite.weatherapp.databinding.FragmentLocationBinding;
+import kh.edu.rupp.ite.weatherapp.databinding.FragmentSettingBinding;
 
-public class LocationFragment extends Fragment {
-    private FragmentLocationBinding binding;
+public class SettingFragment extends Fragment {
+    private FragmentSettingBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentLocationBinding.inflate(inflater, container, false);
+        binding = FragmentSettingBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
     }

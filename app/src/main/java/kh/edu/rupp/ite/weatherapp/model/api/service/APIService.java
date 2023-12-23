@@ -1,6 +1,6 @@
-package kh.edu.rupp.ite.weatherapp.api.service;
+package kh.edu.rupp.ite.weatherapp.model.api.service;
 
-import kh.edu.rupp.ite.weatherapp.api.model.Weather;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
