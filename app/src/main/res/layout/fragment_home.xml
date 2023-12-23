@@ -262,23 +262,14 @@
 
                     <TextView
                         android:id="@+id/wind_speed"
-                        android:background="@color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/transparent"
                         android:text="@string/wind"
                         app:layout_constraintBottom_toBottomOf="@id/wind_speed_icon"
-                        app:layout_constraintEnd_toStartOf="@id/wind_speed_unit"
-                        app:layout_constraintTop_toTopOf="@id/wind_speed_icon" />
+                        app:layout_constraintTop_toTopOf="@id/wind_speed_icon"
+                        tools:layout_editor_absoluteX="30dp" />
 
-                    <TextView
-                        android:id="@+id/wind_speed_unit"
-                        android:background="@color/transparent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/speed"
-                        app:layout_constraintBottom_toBottomOf="@id/wind_speed"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/wind_speed" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
