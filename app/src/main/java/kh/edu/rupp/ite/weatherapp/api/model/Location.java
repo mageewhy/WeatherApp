@@ -7,6 +7,8 @@ public class Location {
     private String name;
     @SerializedName("country")
     private String country;
+    @SerializedName("localtime")
+    private String localtime;
 
     public String getName() {
         return name;
@@ -19,12 +21,16 @@ public class Location {
     public String getCountry() {
         return country;
     }
-
     public void setCountry(String country) {
         this.country = country;
     }
-    @Override
-    public String toString() {
-        return name + ", " + country;
+
+    public void setLocaltime(String localtime) {
+        this.localtime = localtime;
     }
+    public String getLocaltime() {
+        return localtime;
+    }
+
+
 }

@@ -12,7 +12,8 @@
     <color name="bg_testing">#7BA4C4</color>
     <color name="transparent">#00000000 </color>
 
-    <color name="search_view">#AB090909</color>
+    <color name="search_view_dark">#AB090909</color>
+    <color name="search_view_light">#D5FFFFFF</color>
 
 <!--    <color name="card_view_outside_b">#7C505050</color>-->
     <color name="card_view_inside_b">#BA090909</color>
