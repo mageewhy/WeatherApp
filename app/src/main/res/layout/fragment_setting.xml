@@ -12,7 +12,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="14dp"
         android:text="Setting"
-        android:textSize="34sp"
+        android:textSize="@dimen/temp_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +42,9 @@
         android:id="@+id/degree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="40dp"
         android:text="Temperature Units"
-        android:textSize="24sp"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="@+id/labelText"
         app:layout_constraintTop_toBottomOf="@+id/labelText" />
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Wind Speed Units"
-        android:textSize="24sp"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="@+id/degree"
         app:layout_constraintTop_toBottomOf="@+id/degree" />
 </androidx.constraintlayout.widget.ConstraintLayout>

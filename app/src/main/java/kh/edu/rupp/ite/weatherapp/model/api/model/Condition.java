@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.weatherapp.api.model;
+package kh.edu.rupp.ite.weatherapp.model.api.model;
 
 public class Condition {
     private String text;
@@ -13,7 +13,7 @@ public class Condition {
     }
 
     public String getIcon() {
-        return icon;
+        return "http:" + icon;
     }
 
     public void setIcon(String icon) {

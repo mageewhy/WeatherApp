@@ -7,7 +7,7 @@
         />
     <item
         android:id="@+id/menuLocation"
-        android:title="@string/location"
+        android:title="@string/location_nav"
         android:icon="@drawable/ic_location_foreground"
         />
     <item

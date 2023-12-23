@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.weatherapp;
+package kh.edu.rupp.ite.weatherapp.view.activity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -13,10 +13,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Calendar;
 
+import kh.edu.rupp.ite.weatherapp.R;
 import kh.edu.rupp.ite.weatherapp.databinding.ActivityMainBinding;
-import kh.edu.rupp.ite.weatherapp.ui.fragment.HomeFragment;
-import kh.edu.rupp.ite.weatherapp.ui.fragment.LocationFragment;
-import kh.edu.rupp.ite.weatherapp.ui.fragment.SettingFragment;
+import kh.edu.rupp.ite.weatherapp.view.fragment.HomeFragment;
+import kh.edu.rupp.ite.weatherapp.view.fragment.LocationFragment;
+import kh.edu.rupp.ite.weatherapp.view.fragment.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

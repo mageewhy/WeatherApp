@@ -20,6 +20,14 @@
         android:queryHint="Choose City"
         android:theme="@style/Search.Theme.WeatherApp"/>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_location">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_layout"
         android:layout_width="match_parent"
@@ -28,8 +36,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_location"
         app:layout_constraintVertical_bias="0"
         tools:listitem="@layout/recyler_item"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

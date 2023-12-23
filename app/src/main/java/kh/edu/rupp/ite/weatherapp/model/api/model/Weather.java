@@ -1,14 +1,10 @@
-package kh.edu.rupp.ite.weatherapp.api.model;
-
-import com.google.gson.annotations.SerializedName;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+package kh.edu.rupp.ite.weatherapp.model.api.model;
 
 public class Weather {
     private Location location;
     private Current current;
     private Forecast forecast;
+    private Condition condition;
 
     public Location getLocation() {
         return location;
@@ -32,6 +28,14 @@ public class Weather {
 
     public void setForecast(Forecast forecast) {
         this.forecast = forecast;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }
 

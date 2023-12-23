@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.weatherapp.ui.fragment;
+package kh.edu.rupp.ite.weatherapp.view.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;

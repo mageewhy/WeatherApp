@@ -5,18 +5,23 @@
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.ImageView;
     import android.widget.TextView;
 
     import androidx.annotation.NonNull;
     import androidx.recyclerview.widget.RecyclerView;
 
 
+    import com.squareup.picasso.Picasso;
+
+    import java.util.ArrayList;
     import java.util.List;
 
     import kh.edu.rupp.ite.weatherapp.R;
-    import kh.edu.rupp.ite.weatherapp.api.model.Current;
-    import kh.edu.rupp.ite.weatherapp.api.model.Location;
-    import kh.edu.rupp.ite.weatherapp.api.model.Weather;
+    import kh.edu.rupp.ite.weatherapp.model.api.model.Condition;
+    import kh.edu.rupp.ite.weatherapp.model.api.model.Current;
+    import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
+    import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 
     public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
         private List<Weather> weatherList;
@@ -25,6 +30,17 @@
 
         public LocationAdapter(List<Weather> weatherList) {
             this.weatherList = weatherList;
+        }
+        public void setWeatherList(List<Weather> weatherList) {
+            this.weatherList = weatherList;
+        }
+        public List<String> getCityNames() {
+            List<String> cityNames = new ArrayList<>();
+            for (Weather weather : weatherList) {
+                Location location = weather.getLocation();
+                cityNames.add(location.getName());
+            }
+            return cityNames;
         }
 
         @NonNull
@@ -39,6 +55,7 @@
             Weather weather = weatherList.get(position);
             Location location = weather.getLocation();
             Current current = weather.getCurrent();
+//            Condition condition = weather.getCondition();
 
             // Get the SharedPreferences instance
             sp = holder.itemView.getContext().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
@@ -47,7 +64,9 @@
             holder.cityNameTextView.setText(location.getName());
             holder.countryNameTextView.setText(location.getCountry());
             holder.dateTimeZone.setText(location.getLocaltime());
-            holder.tempView.setText(String.format("%.1f°C", current.getTemp_c()));
+//            Picasso.get()
+//                    .load(condition.getIcon())
+//                    .into(holder.iconImageView);
             if (this.temp.equals("°C")) {
                 holder.tempView.setText(String.format("%.1f°C", current.getTemp_c()));
             } else {
@@ -66,12 +85,14 @@
             TextView countryNameTextView;
             TextView dateTimeZone;
             TextView tempView;
+            ImageView iconImageView;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 cityNameTextView = itemView.findViewById(R.id.city_name);
                 countryNameTextView = itemView.findViewById(R.id.country_name);
                 dateTimeZone = itemView.findViewById(R.id.date_timezone);
+                iconImageView = itemView.findViewById(R.id.dynamic_icon_rcv);
                 tempView = itemView.findViewById(R.id.temp_view);
 
             }
