@@ -1,6 +1,4 @@
-package kh.edu.rupp.ite.weatherapp.api.model;
-
-import com.google.gson.annotations.SerializedName;
+package kh.edu.rupp.ite.weatherapp.model.api.model;
 
 public class Hour {
     private String time;

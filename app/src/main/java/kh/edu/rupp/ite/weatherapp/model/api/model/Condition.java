@@ -1,4 +1,4 @@
-package kh.edu.rupp.ite.weatherapp.api.model;
+package kh.edu.rupp.ite.weatherapp.model.api.model;
 
 public class Condition {
     private String text;

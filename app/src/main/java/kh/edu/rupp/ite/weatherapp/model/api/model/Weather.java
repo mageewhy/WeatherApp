@@ -1,9 +1,4 @@
-package kh.edu.rupp.ite.weatherapp.api.model;
-
-import com.google.gson.annotations.SerializedName;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+package kh.edu.rupp.ite.weatherapp.model.api.model;
 
 public class Weather {
     private Location location;
