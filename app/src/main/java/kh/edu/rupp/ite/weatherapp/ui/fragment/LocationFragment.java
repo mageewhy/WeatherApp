@@ -1,6 +1,8 @@
 package kh.edu.rupp.ite.weatherapp.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,7 +53,6 @@ public class LocationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         weatherList = new ArrayList<>();
         locationAdapter = new LocationAdapter(weatherList);

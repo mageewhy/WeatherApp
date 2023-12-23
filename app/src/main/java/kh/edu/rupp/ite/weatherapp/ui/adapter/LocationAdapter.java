@@ -1,5 +1,7 @@
     package kh.edu.rupp.ite.weatherapp.ui.adapter;
 
+    import android.content.Context;
+    import android.content.SharedPreferences;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
@@ -18,6 +20,8 @@
 
     public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
         private List<Weather> weatherList;
+        private String temp;
+        SharedPreferences sp;
 
         public LocationAdapter(List<Weather> weatherList) {
             this.weatherList = weatherList;
@@ -36,10 +40,20 @@
             Location location = weather.getLocation();
             Current current = weather.getCurrent();
 
+            // Get the SharedPreferences instance
+            sp = holder.itemView.getContext().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
+            this.temp = sp.getString("temp", "");
+
             holder.cityNameTextView.setText(location.getName());
             holder.countryNameTextView.setText(location.getCountry());
             holder.dateTimeZone.setText(location.getLocaltime());
             holder.tempView.setText(String.format("%.1f°C", current.getTemp_c()));
+            if (this.temp.equals("°C")) {
+                holder.tempView.setText(String.format("%.1f°C", current.getTemp_c()));
+            } else {
+                holder.tempView.setText(String.format("%.1f°F", current.getTemp_f()));
+            }
+
         }
 
         @Override
