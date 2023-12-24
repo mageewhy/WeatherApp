@@ -16,6 +16,7 @@ public class Current {
     @SerializedName("cloud")
     private int cloud;
 
+    private Condition condition;
 
     public String getLastUpdated() {
         return lastUpdated;
@@ -63,5 +64,13 @@ public class Current {
 
     public void setCloud(int cloud) {
         this.cloud = cloud;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }

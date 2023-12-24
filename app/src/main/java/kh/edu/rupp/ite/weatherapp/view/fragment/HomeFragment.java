@@ -1,8 +1,6 @@
 package kh.edu.rupp.ite.weatherapp.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,19 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.List;
 
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
-import kh.edu.rupp.ite.weatherapp.model.api.model.Forecast;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Forecastday;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
 import kh.edu.rupp.ite.weatherapp.ui.adapter.HourlyForecastAdapter;
+import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 
 public class HomeFragment extends Fragment {
@@ -36,7 +35,6 @@ public class HomeFragment extends Fragment {
 
     private String temp;
     private String speed;
-    SharedPreferences sp;
 
     @Nullable
     @Override
@@ -51,9 +49,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sp = getActivity().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
-        this.temp = sp.getString("temp", "");
-        this.speed = sp.getString("speed", "");
+        this.temp = SettingPreference.getInstance(getContext()).getKeyValue("temp");
+        this.speed = SettingPreference.getInstance(getContext()).getKeyValue("speed");
 
         viewModel.LoadWeather();
 
@@ -81,6 +78,7 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void ShowWeather(Weather weather) {
+        Picasso.get().load(weather.getCurrent().getCondition().getIcon()).into(binding.dynamicIcon);
         if (this.temp.equals("°C")) {
             binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_c()) + "°C");
         }
@@ -111,4 +109,5 @@ public class HomeFragment extends Fragment {
         adapter.submitList(hours);
         binding.recyclerHourlyForecast.setAdapter(adapter);
     }
+
 }

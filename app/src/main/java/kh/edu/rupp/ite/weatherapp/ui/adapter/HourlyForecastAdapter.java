@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import kh.edu.rupp.ite.weatherapp.databinding.ViewHolderHourlyForecastBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Forecast;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
@@ -60,7 +63,10 @@ public class HourlyForecastAdapter extends ListAdapter<Hour, HourlyForecastAdapt
         }
 
         public void bind(Hour hour) {
-            itemBinding.txt1.setText(hour.getTime());
+            LocalDateTime dateTime = LocalDateTime.parse(hour.getTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            String timeString = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+
+            itemBinding.txt1.setText(timeString);
             Picasso.get().load(hour.getCondition().getIcon()).into(itemBinding.img1);
             itemBinding.txt2.setText(Float.toString(hour.getTemp_c()));
         }
