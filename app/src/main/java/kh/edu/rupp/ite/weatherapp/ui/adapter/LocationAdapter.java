@@ -25,7 +25,6 @@
         private List<Weather> weatherListFromPrefs;
         SettingPreference settingPreference;
 
-
         public LocationAdapter(List<Weather> weatherList) {
             this.weatherListFromPrefs = weatherList;
         }

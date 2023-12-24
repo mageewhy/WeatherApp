@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_main"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="270dp"
         android:theme="@style/NoActionBar.Theme.WeatherApp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -321,7 +321,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-                    android:scrollbars="horizontal" />
+                    android:scrollbars="none" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
