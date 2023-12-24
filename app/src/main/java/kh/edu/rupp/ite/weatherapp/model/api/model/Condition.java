@@ -13,7 +13,7 @@ public class Condition {
     }
 
     public String getIcon() {
-        return "http:" + icon;
+        return "https:" + icon;
     }
 
     public void setIcon(String icon) {
