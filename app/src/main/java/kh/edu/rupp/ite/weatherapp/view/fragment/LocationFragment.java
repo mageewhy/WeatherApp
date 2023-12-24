@@ -1,5 +1,6 @@
 package kh.edu.rupp.ite.weatherapp.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class LocationFragment extends Fragment {
     private FragmentLocationBinding binding;
     private LocationAdapter locationAdapter = new LocationAdapter(new ArrayList<>());
     private WeatherViewModel viewModel;
+    private List<String> cityNames = new ArrayList<>();
     private String lastQuery = ""; // Track the last query
 
     @Nullable
@@ -71,17 +73,19 @@ public class LocationFragment extends Fragment {
                 // Get position of item
                 int position = viewHolder.getAdapterPosition();
 
-                // below line is to remove item from our array list.
-                viewModel.removeWeatherDataFromSharedPreferences(getContext(), position);
-
-                // Update the adapter's data after the removal
-                viewModel.getAllWeatherDataFromSharedPreferences(requireContext()); // Refresh data in ViewModel
-
                 // remove cityNames from list
                 String cityRemoved = locationAdapter.getCityNames().remove(position);
                 Log.d("Removal", "Removed Item: " + cityRemoved);
                 // below line is to notify our item is removed from adapter.
                 locationAdapter.notifyItemRemoved(position);
+
+                // below line is to remove item from our array list.
+                viewModel.removeWeatherDataFromSharedPreferences(getContext(), cityRemoved);
+
+                // Update the adapter's data after the removal
+                viewModel.getAllWeatherDataFromSharedPreferences(requireContext()); // Refresh data in ViewModel
+
+
             }
             // Add to recycler view.
         }).attachToRecyclerView(binding.recyclerLayout);
@@ -91,6 +95,7 @@ public class LocationFragment extends Fragment {
 
         // Use the 'allWeatherData' list containing all the retrieved Weather objects as needed
         List<Weather> allWeatherData = viewModel.getAllWeatherDataFromSharedPreferences(requireContext());
+        viewModel.getAllWeatherDataFromSharedPreferences(getContext());
 
         // Set the retrieved weather data into the adapter
         locationAdapter.setWeatherList(allWeatherData);
@@ -151,7 +156,7 @@ public class LocationFragment extends Fragment {
             @Override
             public void onRefresh() {
                 // Get the latest city name from your UI or pass it as an argument
-                List<String> cityNames = locationAdapter.getCityNames();
+                locationAdapter.getCityNames();
 
                 // Call the refreshLocationData method to refresh the location data
                 for (String cityName : cityNames) {

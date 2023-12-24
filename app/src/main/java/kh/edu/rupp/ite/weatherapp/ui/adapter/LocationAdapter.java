@@ -19,22 +19,22 @@
     import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
     import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
     import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
+    import kh.edu.rupp.ite.weatherapp.utility.WeatherPreference;
 
     public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
-        private List<Weather> weatherList;
+        private List<Weather> weatherListFromPrefs;
         private String temp;
         SettingPreference settingPreference;
 
-        public LocationAdapter(List<Weather> weatherList, Context mContext) {
-            this.weatherList = weatherList;
-            this.mContext = mContext;
+        public LocationAdapter(List<Weather> weatherList) {
+            this.weatherListFromPrefs = weatherList;
         }
         public void setWeatherList(List<Weather> weatherList) {
-            this.weatherList = weatherList;
+            this.weatherListFromPrefs = weatherList;
         }
         public List<String> getCityNames() {
             List<String> cityNames = new ArrayList<>();
-            for (Weather weather : weatherList) {
+            for (Weather weather : weatherListFromPrefs) {
                 Location location = weather.getLocation();
                 cityNames.add(location.getName());
             }
@@ -50,7 +50,7 @@
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Weather weather = weatherList.get(position);
+            Weather weather = weatherListFromPrefs.get(position);
             Location location = weather.getLocation();
             Current current = weather.getCurrent();
 //            Condition condition = weather.getCondition();
@@ -74,7 +74,7 @@
 
         @Override
         public int getItemCount() {
-            return weatherList.size();
+            return weatherListFromPrefs.size();
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -119,7 +119,7 @@ public class WeatherViewModel extends ViewModel {
     }
 
     // Saving Weather data using Gson for serialization
-    public void saveWeatherDataToSharedPreferences(Context context) {
+    public void saveWeatherDataToSharedPreferences(Context context, List<Weather> weatherList) {
         Gson gson = new Gson();
 
         for (Weather weather : weatherList) {
@@ -129,6 +129,11 @@ public class WeatherViewModel extends ViewModel {
 
             WeatherPreference.getInstance(context).storeKey(cityName, weatherData);
         }
+    }
+
+    public void removeWeatherDataFromSharedPreferences(Context context, String cityName){
+        WeatherPreference.getInstance(context).removeKey(cityName);
+
     }
 
     // Retrieving Weather data using Gson for deserialization
@@ -144,6 +149,7 @@ public class WeatherViewModel extends ViewModel {
             String key = entry.getKey();
             String weatherJson = entry.getValue().toString();
             Weather weather = gson.fromJson(weatherJson, Weather.class);
+            Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
 
             // Check if the key (city name) already exists in the list
             boolean alreadyExists = false;
