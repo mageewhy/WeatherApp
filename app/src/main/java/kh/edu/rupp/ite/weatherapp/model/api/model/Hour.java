@@ -6,6 +6,13 @@ public class Hour {
     private float temp_f;
     private Condition condition;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getTime() {
         return time;
     }

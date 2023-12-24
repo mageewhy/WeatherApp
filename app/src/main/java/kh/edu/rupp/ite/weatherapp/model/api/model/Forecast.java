@@ -8,8 +8,8 @@ public class Forecast {
     @SerializedName("forecastday")
     private List<Forecastday> forecastday;
 
-    public Forecastday getForecastday() {
-        return forecastday.get(0);
+    public List<Forecastday> getForecastday() {
+        return forecastday;
     }
 
     public void setForecastday(Forecastday forecastday) {

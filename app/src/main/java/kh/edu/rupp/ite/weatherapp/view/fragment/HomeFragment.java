@@ -7,16 +7,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.util.Arrays;
+import java.util.List;
 
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Forecast;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Forecastday;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
+import kh.edu.rupp.ite.weatherapp.ui.adapter.HourlyForecastAdapter;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 
 public class HomeFragment extends Fragment {
@@ -55,7 +65,9 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_LONG).show();
                         break;
                     case SUCCESS:
-                        ShowWeather(weatherApiData.getData());
+                        Weather weatherData = weatherApiData.getData();
+                        ShowWeather(weatherData);
+                        ShowHourlyCastList(Arrays.asList(weatherData.getForecast().getForecastday().get(0).getHour()));
                         break;
                     case ERROR:
                         Toast.makeText(getContext(), "Received Failed", Toast.LENGTH_LONG).show();
@@ -77,7 +89,7 @@ public class HomeFragment extends Fragment {
         }
         binding.location.setText(weather.getLocation().getName() + ", " + weather.getLocation().getCountry());
         binding.updatedStatus.setText(weather.getCurrent().getLastUpdated());
-        binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().getDay().getDaily_chance_of_rain()) + "% Chance");
+        binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().get(0).getDay().getDaily_chance_of_rain()) + "% Chance");
 
         if (this.speed.equals("Km/h")) {
             binding.windSpeed.setText(Float.toString(weather.getCurrent().getWind_kph()) + " Km/h");
@@ -86,10 +98,15 @@ public class HomeFragment extends Fragment {
         }
 
         if (this.temp.equals("°C")) {
-            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c()) + "°C");
+            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().get(0).getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().get(0).getDay().getMaxtemp_c()) + "°C");
         } else {
-            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getAvgtemp_f())+ "°F | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_f()) + "°F");
+            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().get(0).getDay().getAvgtemp_f())+ "°F | " + Float.toString(weather.getForecast().getForecastday().get(0).getDay().getMaxtemp_f()) + "°F");
         }
+    }
+
+    private void ShowHourlyCastList(List<Hour> hours) {
+
+
     }
 
 }
