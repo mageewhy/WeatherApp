@@ -10,7 +10,6 @@
         android:id="@+id/show_main"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:padding="10dp"
         android:theme="@style/NoActionBar.Theme.WeatherApp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,9 +62,9 @@
             android:id="@+id/location_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/weather_showing"
             app:layout_constraintEnd_toEndOf="@+id/weather_showing"
-            app:layout_constraintStart_toStartOf="@+id/weather_showing"
-            app:layout_constraintBottom_toTopOf="@+id/just_updated_lyt">
+            app:layout_constraintStart_toStartOf="@+id/weather_showing">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/location_img"
@@ -95,11 +94,10 @@
             android:id="@+id/just_updated_lyt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:background="@color/transparent"
             app:layout_constraintEnd_toEndOf="@+id/weather_showing"
-            app:layout_constraintStart_toStartOf="@+id/weather_showing"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/location_show"
+            app:layout_constraintStart_toStartOf="@+id/weather_showing">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/updated_status_img"
@@ -268,6 +266,7 @@
                         android:text="@string/wind"
                         app:layout_constraintBottom_toBottomOf="@id/wind_speed_icon"
                         app:layout_constraintTop_toTopOf="@id/wind_speed_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
                         tools:layout_editor_absoluteX="30dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

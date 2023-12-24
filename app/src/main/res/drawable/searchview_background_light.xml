@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/search_view_light" /> <!-- Set your desired background color -->
+    <corners android:radius="55dp" /> <!-- Set the desired radius for rounded corners -->
+    <stroke android:width="0dp" />
+</shape>

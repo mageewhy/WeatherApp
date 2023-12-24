@@ -10,7 +10,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="15dp"
+        android:padding="25dp"
         android:theme="@style/Base.Theme.WeatherApp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,25 +20,26 @@
         android:background="@color/transparent">
 
         <TextView
-            android:id="@+id/location_name"
+            android:id="@+id/city_name"
             android:background="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/location"
-            android:textSize="@dimen/rcy_location_text"
+            android:textSize="@dimen/rcy_city_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/country_name"
-            android:background="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:text="@string/location"
             android:textSize="@dimen/rcy_country"
+            app:layout_constraintBottom_toTopOf="@+id/date_timezone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location_name" />
+            app:layout_constraintTop_toBottomOf="@id/city_name" />
 
         <TextView
             android:id="@+id/date_timezone"
@@ -47,8 +48,8 @@
             android:background="@color/transparent"
             android:text="@string/location"
             android:textSize="@dimen/rcy_date_time"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/country_name" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -74,13 +75,13 @@
             android:layout_height="@dimen/rcy_icon_size"
             android:background="@color/transparent"
             android:src="@drawable/wind"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/temp_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/temp_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"

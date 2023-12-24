@@ -15,16 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
-import kh.edu.rupp.ite.weatherapp.model.api.model.Status;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
-import kh.edu.rupp.ite.weatherapp.model.api.service.APIService;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
@@ -76,7 +69,12 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void ShowWeather(Weather weather) {
-        binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_c()) + "°C");
+        if (this.temp.equals("°C")) {
+            binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_c()) + "°C");
+        }
+        else {
+            binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_f()) + "°F");
+        }
         binding.location.setText(weather.getLocation().getName() + ", " + weather.getLocation().getCountry());
         binding.updatedStatus.setText(weather.getCurrent().getLastUpdated());
         binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().getDay().getDaily_chance_of_rain()) + "% Chance");

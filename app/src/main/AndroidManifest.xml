@@ -20,9 +20,11 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_home"
             android:theme="@style/Base.Theme.WeatherApp" />
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".view.activity.LoadingActivity"
             android:exported="true"
             android:theme="@style/Base.Theme.WeatherApp" >
