@@ -2,13 +2,16 @@
 
     import android.content.Context;
     import android.content.SharedPreferences;
+    import android.util.Log;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.ImageView;
     import android.widget.TextView;
+    import android.widget.Toast;
 
     import androidx.annotation.NonNull;
+    import androidx.recyclerview.widget.ItemTouchHelper;
     import androidx.recyclerview.widget.RecyclerView;
 
     import com.squareup.picasso.Picasso;
@@ -25,10 +28,12 @@
     public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
         private List<Weather> weatherList;
         private String temp;
+        private Context mContext;
         SharedPreferences sp;
 
-        public LocationAdapter(List<Weather> weatherList) {
+        public LocationAdapter(List<Weather> weatherList, Context mContext) {
             this.weatherList = weatherList;
+            this.mContext = mContext;
         }
         public void setWeatherList(List<Weather> weatherList) {
             this.weatherList = weatherList;
@@ -71,7 +76,6 @@
             } else {
                 holder.tempView.setText(String.format("%.1f°F", current.getTemp_f()));
             }
-
         }
 
         @Override

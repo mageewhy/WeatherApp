@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:theme="@style/CardView.Theme.WeatherApp"
         app:layout_constraintTop_toBottomOf="@+id/labelText">
         <Spinner
             android:id="@+id/tempSpinner"
@@ -45,6 +46,7 @@
             android:layout_marginEnd="16dp"
             android:contextClickable="false"
             android:textAlignment="center"
+            android:spinnerMode="dialog"
             app:layout_constraintBottom_toBottomOf="@+id/wind"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/wind" />

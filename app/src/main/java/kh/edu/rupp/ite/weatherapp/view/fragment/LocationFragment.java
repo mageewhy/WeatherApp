@@ -13,8 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +55,36 @@ public class LocationFragment extends Fragment {
 
         // Setup Recycler View
         binding.recyclerLayout.setAdapter(locationAdapter);
+
+        // on below line we are creating a method to create item touch helper
+        // method for adding swipe to delete functionality.
+        // in this we are specifying drag direction and position to right
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                // this method is called when the item is moved.
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // Get position of item
+                int position = viewHolder.getAdapterPosition();
+
+                // below line is to remove item from our array list.
+                viewModel.removeWeatherDataFromSharedPreferences(getContext(), position);
+
+                // Update the adapter's data after the removal
+                viewModel.getAllWeatherDataFromSharedPreferences(requireContext()); // Refresh data in ViewModel
+
+                // remove cityNames from list
+                String cityRemoved = locationAdapter.getCityNames().remove(position);
+                Log.d("Removal", "Removed Item: " + cityRemoved);
+                // below line is to notify our item is removed from adapter.
+                locationAdapter.notifyItemRemoved(position);
+            }
+            // Add to recycler view.
+        }).attachToRecyclerView(binding.recyclerLayout);
 
         // Retrieve the ViewModel from the parent activity
         viewModel = new ViewModelProvider(requireActivity()).get(WeatherViewModel.class);
@@ -121,6 +155,7 @@ public class LocationFragment extends Fragment {
 
                 // Call the refreshLocationData method to refresh the location data
                 for (String cityName : cityNames) {
+                    Log.d("cityNames", "City name:" + cityName);
                     viewModel.refreshLocationData(requireContext(), cityName);
                 }
                 swipeRefreshLayout.setRefreshing(false);

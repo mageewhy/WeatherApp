@@ -99,7 +99,7 @@ public class WeatherViewModel extends ViewModel {
                     _weatherLocationData.postValue(locationAPIData);
 
                     // Save the weather data into SharedPreferences here
-                    saveWeatherDataToSharedPreferences(context);
+                    saveWeatherDataToSharedPreferences(context, weatherList);
                 } else {
                     // Handle the unsuccessful response
                     ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.ERROR, null);
@@ -118,7 +118,7 @@ public class WeatherViewModel extends ViewModel {
     }
 
     // Saving Weather data using Gson for serialization
-    public void saveWeatherDataToSharedPreferences(Context context) {
+    public void saveWeatherDataToSharedPreferences(Context context, List<Weather> weatherList) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myWeatherData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -133,6 +133,13 @@ public class WeatherViewModel extends ViewModel {
 
         editor.apply();
     }
+
+    // Remove Weather Data from ItemTouchHelper in SharedPreferences
+    public void removeWeatherDataFromSharedPreferences(Context context, int pos){
+
+
+    }
+
 
     // Retrieving Weather data using Gson for deserialization
     public List<Weather> getAllWeatherDataFromSharedPreferences(Context context) {
@@ -163,7 +170,7 @@ public class WeatherViewModel extends ViewModel {
                 weatherListFromPrefs.add(weather);
             }
         }
-
+        Log.d("WeatherListFromPrefs", "List in Pref: " + weatherListFromPrefs);
         return weatherListFromPrefs;
     }
 
