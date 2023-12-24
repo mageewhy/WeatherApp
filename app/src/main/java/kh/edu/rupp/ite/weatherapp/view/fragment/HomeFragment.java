@@ -5,21 +5,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
 import java.util.List;
 
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Forecastday;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
+import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
+import kh.edu.rupp.ite.weatherapp.ui.adapter.HourlyForecastAdapter;
 import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 
@@ -61,7 +67,7 @@ public class HomeFragment extends Fragment {
                         binding.progressBar2.setVisibility(View.GONE);
                         Weather weatherData = weatherApiData.getData();
                         ShowWeather(weatherData);
-                        ShowHourlyCastList(weatherData.getForecast().getForecastday());
+                        ShowHourlyCastList(Arrays.asList(weatherData.getForecast().getForecastday().get(0).getHour()));
                         break;
                     case ERROR:
                         binding.progressBar2.setVisibility(View.GONE);
@@ -100,8 +106,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void ShowHourlyCastList(List<Forecastday> forecastday) {
-
+    private void ShowHourlyCastList(List<Hour> hours) {
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerHourlyForecast.setLayoutManager(gridLayoutManager);
+        HourlyForecastAdapter adapter = new HourlyForecastAdapter();
+        adapter.submitList(hours);
+        binding.recyclerHourlyForecast.setAdapter(adapter);
     }
 
 }
