@@ -20,10 +20,16 @@
     <string name="cel">28°C</string>
     <string name="action_settings">Settings</string>
     <string name="home">Home</string>
-    <string name="setting">Setting</string>
     <string name="location_nav">Location</string>
 
+    <!-- Location -->
     <string name="choose_location">Choose Location</string>
     <string name="manage_location">Manage Location</string>
     <string name="search">Search Location: City Name</string>
+
+    <!-- Setting -->
+    <string name="temp_unit">Temperature Units</string>
+    <string name="wind_unit">Wind Speed Units</string>
+    <string name="setting">Setting</string>
+
 </resources>

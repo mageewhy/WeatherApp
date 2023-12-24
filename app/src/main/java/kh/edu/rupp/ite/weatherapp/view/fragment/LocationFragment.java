@@ -55,6 +55,13 @@ public class LocationFragment extends Fragment {
         // Retrieve the ViewModel from the parent activity
         viewModel = new ViewModelProvider(requireActivity()).get(WeatherViewModel.class);
 
+        // Use the 'allWeatherData' list containing all the retrieved Weather objects as needed
+        List<Weather> allWeatherData = viewModel.getAllWeatherDataFromSharedPreferences(requireContext());
+
+        // Set the retrieved weather data into the adapter
+        locationAdapter.setWeatherList(allWeatherData);
+        locationAdapter.notifyDataSetChanged();
+
         SearchView searchView = view.findViewById(R.id.search_location);
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +70,7 @@ public class LocationFragment extends Fragment {
                 String query = searchView.getQuery().toString();
                 if (!query.equals(lastQuery)) {
                     lastQuery = query;
-                    viewModel.LoadLocationData(query);
+                    viewModel.LoadLocationData(requireContext(), query);
                 }
             }
         });
@@ -73,7 +80,7 @@ public class LocationFragment extends Fragment {
                 // Set the selected city name in the WeatherViewModel
                 if (!query.equals(lastQuery)) {
                     lastQuery = query;
-                    viewModel.LoadLocationData(query);
+                    viewModel.LoadLocationData(requireContext(), query);
                 }
                 return true;
             }
@@ -114,7 +121,7 @@ public class LocationFragment extends Fragment {
 
                 // Call the refreshLocationData method to refresh the location data
                 for (String cityName : cityNames) {
-                    viewModel.refreshLocationData(cityName);
+                    viewModel.refreshLocationData(requireContext(), cityName);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }

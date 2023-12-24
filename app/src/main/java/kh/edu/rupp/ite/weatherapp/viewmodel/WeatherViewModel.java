@@ -1,15 +1,21 @@
 package kh.edu.rupp.ite.weatherapp.viewmodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Status;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.model.api.service.APIService;
@@ -23,7 +29,9 @@ public class WeatherViewModel extends ViewModel {
 
     private MutableLiveData<ApiData<Weather>> _weatherData = new MutableLiveData<>();
     private MutableLiveData<ApiData<List<Weather>>> _weatherLocationData = new MutableLiveData<>();
-    private List<Weather> weatherList = new ArrayList<>();
+    private List<Weather> weatherList = new ArrayList<>(); // For API responses
+    private List<Weather> weatherListFromPrefs = new ArrayList<>(); // For SharedPreferences data
+
     private String apiKey = "25714936cd1e401ea1270735231610";
 
     public LiveData<ApiData<List<Weather>>> getWeatherLocationData() {
@@ -66,7 +74,7 @@ public class WeatherViewModel extends ViewModel {
     }
 
 
-    public void LoadLocationData(String cityName) {
+    public void LoadLocationData(Context context, String cityName) {
         ApiData<List<Weather>> weatherLocationData = new ApiData<List<Weather>>(Status.PROCESSING, null) {
         };
         _weatherLocationData.postValue(weatherLocationData);
@@ -89,6 +97,9 @@ public class WeatherViewModel extends ViewModel {
 
                     ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.SUCCESS, weatherList);
                     _weatherLocationData.postValue(locationAPIData);
+
+                    // Save the weather data into SharedPreferences here
+                    saveWeatherDataToSharedPreferences(context);
                 } else {
                     // Handle the unsuccessful response
                     ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.ERROR, null);
@@ -105,11 +116,63 @@ public class WeatherViewModel extends ViewModel {
             }
         });
     }
-    public void refreshLocationData(String cityName) {
+
+    // Saving Weather data using Gson for serialization
+    public void saveWeatherDataToSharedPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("myWeatherData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+
+        for (Weather weather : weatherList) {
+            Location location = weather.getLocation();
+            String cityName = location.getName();
+            String weatherData = gson.toJson(weather);
+
+            editor.putString(cityName, weatherData);
+        }
+
+        editor.apply();
+    }
+
+    // Retrieving Weather data using Gson for deserialization
+    public List<Weather> getAllWeatherDataFromSharedPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("myWeatherData", Context.MODE_PRIVATE);
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+
+        Gson gson = new Gson();
+
+        // Clear the existing list before populating
+        weatherListFromPrefs.clear();
+
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            String key = entry.getKey();
+            String weatherJson = entry.getValue().toString();
+            Weather weather = gson.fromJson(weatherJson, Weather.class);
+
+            // Check if the key (city name) already exists in the list
+            boolean alreadyExists = false;
+            for (Weather w : weatherListFromPrefs) {
+                if (w.getLocation().getName().equals(key)) {
+                    alreadyExists = true;
+                    break;
+                }
+            }
+
+            // Add the weather data if the key doesn't exist
+            if (!alreadyExists) {
+                weatherListFromPrefs.add(weather);
+            }
+        }
+
+        return weatherListFromPrefs;
+    }
+
+
+    public void refreshLocationData(Context context, String cityName) {
         // Clear the existing weather list
         weatherList.clear();
 
         // Call the API to load the location data again
-        LoadLocationData(cityName);
+        LoadLocationData(context, cityName);
     }
 }
