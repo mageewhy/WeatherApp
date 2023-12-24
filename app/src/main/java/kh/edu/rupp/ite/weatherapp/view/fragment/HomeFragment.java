@@ -1,8 +1,6 @@
 package kh.edu.rupp.ite.weatherapp.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +12,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Forecastday;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
+import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 
 public class HomeFragment extends Fragment {
@@ -26,7 +30,6 @@ public class HomeFragment extends Fragment {
 
     private String temp;
     private String speed;
-    SharedPreferences sp;
 
     @Nullable
     @Override
@@ -41,9 +44,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sp = getActivity().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
-        this.temp = sp.getString("temp", "");
-        this.speed = sp.getString("speed", "");
+        this.temp = SettingPreference.getInstance(getContext()).getKeyValue("temp");
+        this.speed = SettingPreference.getInstance(getContext()).getKeyValue("speed");
 
         viewModel.LoadWeather();
 
@@ -55,7 +57,9 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_LONG).show();
                         break;
                     case SUCCESS:
-                        ShowWeather(weatherApiData.getData());
+                        Weather weatherData = weatherApiData.getData();
+                        ShowWeather(weatherData);
+                        ShowHourlyCastList(weatherData.getForecast().getForecastday());
                         break;
                     case ERROR:
                         Toast.makeText(getContext(), "Received Failed", Toast.LENGTH_LONG).show();
@@ -69,6 +73,7 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void ShowWeather(Weather weather) {
+        Picasso.get().load(weather.getCurrent().getCondition().getIcon()).into(binding.dynamicIcon);
         if (this.temp.equals("°C")) {
             binding.tempBig.setText(Float.toString(weather.getCurrent().getTemp_c()) + "°C");
         }
@@ -77,7 +82,7 @@ public class HomeFragment extends Fragment {
         }
         binding.location.setText(weather.getLocation().getName() + ", " + weather.getLocation().getCountry());
         binding.updatedStatus.setText(weather.getCurrent().getLastUpdated());
-        binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().getDay().getDaily_chance_of_rain()) + "% Chance");
+        binding.rainChance.setText(Integer.toString(weather.getForecast().getForecastday().get(0).getDay().getDaily_chance_of_rain()) + "% Chance");
 
         if (this.speed.equals("Km/h")) {
             binding.windSpeed.setText(Float.toString(weather.getCurrent().getWind_kph()) + " Km/h");
@@ -86,10 +91,14 @@ public class HomeFragment extends Fragment {
         }
 
         if (this.temp.equals("°C")) {
-            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_c()) + "°C");
+            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().get(0).getDay().getMaxtemp_c())+ "°C | " + Float.toString(weather.getForecast().getForecastday().get(0).getDay().getMaxtemp_c()) + "°C");
         } else {
-            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().getDay().getAvgtemp_f())+ "°F | " + Float.toString(weather.getForecast().getForecastday().getDay().getMaxtemp_f()) + "°F");
+            binding.tempText.setText(Float.toString(weather.getForecast().getForecastday().get(0).getDay().getAvgtemp_f())+ "°F | " + Float.toString(weather.getForecast().getForecastday().get(0).getDay().getMaxtemp_f()) + "°F");
         }
+    }
+
+    private void ShowHourlyCastList(List<Forecastday> forecastday) {
+
     }
 
 }

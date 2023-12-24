@@ -1,7 +1,5 @@
     package kh.edu.rupp.ite.weatherapp.ui.adapter;
 
-    import android.content.Context;
-    import android.content.SharedPreferences;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
@@ -11,21 +9,19 @@
     import androidx.annotation.NonNull;
     import androidx.recyclerview.widget.RecyclerView;
 
-    import com.squareup.picasso.Picasso;
-
     import java.util.ArrayList;
     import java.util.List;
 
     import kh.edu.rupp.ite.weatherapp.R;
-    import kh.edu.rupp.ite.weatherapp.model.api.model.Condition;
     import kh.edu.rupp.ite.weatherapp.model.api.model.Current;
     import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
     import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
+    import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 
     public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
         private List<Weather> weatherList;
         private String temp;
-        SharedPreferences sp;
+        SettingPreference settingPreference;
 
         public LocationAdapter(List<Weather> weatherList) {
             this.weatherList = weatherList;
@@ -57,8 +53,8 @@
 //            Condition condition = weather.getCondition();
 
             // Get the SharedPreferences instance
-            sp = holder.itemView.getContext().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
-            this.temp = sp.getString("temp", "");
+            settingPreference = SettingPreference.getInstance(holder.itemView.getContext());
+            this.temp = settingPreference.getKeyValue("temp");
 
             holder.cityNameTextView.setText(location.getName());
             holder.countryNameTextView.setText(location.getCountry());

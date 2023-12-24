@@ -1,9 +1,6 @@
 package kh.edu.rupp.ite.weatherapp.view.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +14,12 @@ import androidx.fragment.app.Fragment;
 
 import kh.edu.rupp.ite.weatherapp.R;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentSettingBinding;
+import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 
 public class SettingFragment extends Fragment {
     private FragmentSettingBinding binding;
     private final String[] temp = {"°C", "°F"};
     private final String[] speed = {"Km/h", "M/h"};
-
-    SharedPreferences sp;
 
     @Nullable
     @Override
@@ -52,17 +48,15 @@ public class SettingFragment extends Fragment {
     }
 
     public void SetSpinnerEvent(Spinner spinner, String[] option) {
-        sp = getActivity().getSharedPreferences("mySetting", Context.MODE_PRIVATE);
-
         if (option == speed) {
-            String select = sp.getString("speed", "");
+            String select = SettingPreference.getInstance(getContext()).getKeyValue("speed");
             if (select.equals("Km/h")) {
                 spinner.setSelection(0);
             } else {
                 spinner.setSelection(1);
             }
         } else {
-            String select = sp.getString("temp", "");
+            String select = SettingPreference.getInstance(getContext()).getKeyValue("temp");
             if (select.equals("°C")) {
                 spinner.setSelection(0);
             } else {
@@ -73,13 +67,10 @@ public class SettingFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences.Editor editor = sp.edit();
                 if (option == temp) {
-                    editor.putString("temp", option[position]);
-                    editor.apply();
+                    SettingPreference.getInstance(getContext()).storeKey("temp", option[position]);
                 } else {
-                    editor.putString("speed", option[position]);
-                    editor.apply();
+                    SettingPreference.getInstance(getContext()).storeKey("speed", option[position]);
                 }
             }
 
