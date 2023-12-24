@@ -1,7 +1,6 @@
 package kh.edu.rupp.ite.weatherapp.viewmodel;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -19,6 +18,8 @@ import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Status;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.model.api.service.APIService;
+import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
+import kh.edu.rupp.ite.weatherapp.utility.WeatherPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -119,8 +120,6 @@ public class WeatherViewModel extends ViewModel {
 
     // Saving Weather data using Gson for serialization
     public void saveWeatherDataToSharedPreferences(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("myWeatherData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
 
         for (Weather weather : weatherList) {
@@ -128,16 +127,13 @@ public class WeatherViewModel extends ViewModel {
             String cityName = location.getName();
             String weatherData = gson.toJson(weather);
 
-            editor.putString(cityName, weatherData);
+            WeatherPreference.getInstance(context).storeKey(cityName, weatherData);
         }
-
-        editor.apply();
     }
 
     // Retrieving Weather data using Gson for deserialization
     public List<Weather> getAllWeatherDataFromSharedPreferences(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("myWeatherData", Context.MODE_PRIVATE);
-        Map<String, ?> allEntries = sharedPreferences.getAll();
+        Map<String, ?> allEntries = WeatherPreference.getInstance(context).getAll();
 
         Gson gson = new Gson();
 
