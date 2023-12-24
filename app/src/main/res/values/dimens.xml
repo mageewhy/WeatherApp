@@ -13,7 +13,7 @@
     <dimen name="detail_icon_size">30dp</dimen>
 
     <!--    recycler Location UI-->
-    <dimen name="rcy_icon_size">35dp</dimen>
+    <dimen name="rcy_icon_size">55dp</dimen>
     <dimen name="rcy_temp_size">20sp</dimen>
     <dimen name="rcy_city_text">25sp</dimen>
     <dimen name="rcy_country">14sp</dimen>

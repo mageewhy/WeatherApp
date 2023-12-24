@@ -1,7 +1,5 @@
 package kh.edu.rupp.ite.weatherapp.model.api.service;
 
-import java.util.List;
-
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import retrofit2.Call;
 import retrofit2.http.GET;

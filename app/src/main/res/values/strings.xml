@@ -23,6 +23,9 @@
     <string name="location_nav">Location</string>
 
     <!-- Location -->
+    <string name="city_name">City Name</string>
+    <string name="country_name">Country Name</string>
+    <string name="local_time">Local Time</string>
     <string name="choose_location">Choose Location</string>
     <string name="manage_location">Manage Location</string>
     <string name="search">Search Location: City Name</string>

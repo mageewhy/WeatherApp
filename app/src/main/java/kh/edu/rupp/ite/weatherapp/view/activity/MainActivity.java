@@ -2,8 +2,6 @@ package kh.edu.rupp.ite.weatherapp.view.activity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             rootView.setBackgroundResource(R.drawable.evening);
         } else {
             // Night
-            rootView.setBackgroundResource(R.drawable.night);
+            rootView.setBackgroundResource(R.drawable.night_bg);
         }
 
     }
