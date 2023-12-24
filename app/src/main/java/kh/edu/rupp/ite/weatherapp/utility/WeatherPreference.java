@@ -35,4 +35,8 @@ public class WeatherPreference {
     public Map<String, ?> getAll() {
         return sp.getAll();
     }
+
+    public void removeKey(String key) {
+        sp.edit().remove(key).apply();
+    }
 }
