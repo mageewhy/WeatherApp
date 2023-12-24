@@ -1,6 +1,7 @@
 package kh.edu.rupp.ite.weatherapp.model.api.model;
 
 public class Hour {
+    private int id;
     private String time;
     private float temp_c;
     private float temp_f;

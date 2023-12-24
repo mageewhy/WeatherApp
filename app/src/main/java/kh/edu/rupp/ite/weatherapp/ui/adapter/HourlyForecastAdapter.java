@@ -15,7 +15,7 @@ import kh.edu.rupp.ite.weatherapp.databinding.ViewHolderHourlyForecastBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Forecast;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
 
-public class HourlyForecastAdapter extends ListAdapter<Forecast, HourlyForecastAdapter.HourlyForecastViewHolder> {
+public class HourlyForecastAdapter extends ListAdapter<Hour, HourlyForecastAdapter.HourlyForecastViewHolder> {
 
     public HourlyForecastAdapter() {
         super(new DiffUtil.ItemCallback<Hour>() {
@@ -25,7 +25,7 @@ public class HourlyForecastAdapter extends ListAdapter<Forecast, HourlyForecastA
             }
 
             @Override
-            public boolean areContentsTheSame(@NonNull Hour oldItem, @NonNull Forecast newItem) {
+            public boolean areContentsTheSame(@NonNull Hour oldItem, @NonNull Hour newItem) {
                 return oldItem.getId() == newItem.getId();
             }
         });
@@ -37,7 +37,7 @@ public class HourlyForecastAdapter extends ListAdapter<Forecast, HourlyForecastA
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewHolderHourlyForecastBinding binding = ViewHolderHourlyForecastBinding.inflate(layoutInflater, parent, false);
-        HourlyForecastViewHolder viewHolder = new HourlyForecastViewHolder(binding.getRoot());
+        HourlyForecastViewHolder viewHolder = new HourlyForecastViewHolder(binding);
         return viewHolder;
 
     }
@@ -45,8 +45,8 @@ public class HourlyForecastAdapter extends ListAdapter<Forecast, HourlyForecastA
     @Override
     public void onBindViewHolder(@NonNull HourlyForecastViewHolder holder, int position) {
 
-        Forecast item = getItem(position);
-        holder.bind(item);
+        Hour hour = getItem(position);
+        holder.bind(hour);
 
     }
 
@@ -54,20 +54,14 @@ public class HourlyForecastAdapter extends ListAdapter<Forecast, HourlyForecastA
 
         private final ViewHolderHourlyForecastBinding itemBinding;
 
-        public HourlyForecastViewHolder(LinearLayout itemBinding) {
+        public HourlyForecastViewHolder(ViewHolderHourlyForecastBinding itemBinding) {
             super(itemBinding.getRoot());
             this.itemBinding = itemBinding;
         }
 
-        public void bind1(Hour hour) {
-            itemBinding.txt1.setText((hour.getTime());
-        }
-
-        public void bind2(Hour hour) {
+        public void bind(Hour hour) {
+            itemBinding.txt1.setText(hour.getTime());
             Picasso.get().load(hour.getCondition().getIcon()).into(itemBinding.img1);
-        }
-
-        public void bind3(Hour hour) {
             itemBinding.txt2.setText(Float.toString(hour.getTemp_c()));
         }
 

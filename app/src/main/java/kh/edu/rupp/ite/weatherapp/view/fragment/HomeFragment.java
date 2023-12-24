@@ -105,8 +105,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void ShowHourlyCastList(List<Hour> hours) {
-
-
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerHourlyForecast.setLayoutManager(gridLayoutManager);
+        HourlyForecastAdapter adapter = new HourlyForecastAdapter();
+        adapter.submitList(hours);
+        binding.recyclerHourlyForecast.setAdapter(adapter);
     }
-
 }
