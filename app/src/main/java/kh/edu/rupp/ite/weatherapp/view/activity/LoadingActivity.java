@@ -18,8 +18,10 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+
         ImageView gifImageView = findViewById(R.id.logoLoading);
 
+        //Using Glide Library to get GifDrawable as Loading Screen
         Glide.with(this)
                 .asGif()
                 .load(R.drawable.loading)

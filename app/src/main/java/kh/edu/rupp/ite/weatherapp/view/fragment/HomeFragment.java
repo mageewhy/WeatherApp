@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,12 +19,11 @@ import com.squareup.picasso.Picasso;
 import java.util.Arrays;
 import java.util.List;
 
+import kh.edu.rupp.ite.weatherapp.R;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
-import kh.edu.rupp.ite.weatherapp.model.api.model.Forecastday;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
-import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
 import kh.edu.rupp.ite.weatherapp.ui.adapter.HourlyForecastAdapter;
 import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
@@ -41,9 +40,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        viewModel.LoadWeather();
         return binding.getRoot();
-
-
     }
 
     @Override
@@ -53,7 +51,14 @@ public class HomeFragment extends Fragment {
         this.temp = SettingPreference.getInstance(getContext()).getKeyValue("temp");
         this.speed = SettingPreference.getInstance(getContext()).getKeyValue("speed");
 
-        viewModel.LoadWeather();
+        ConstraintLayout constraintLayout = binding.showMain.findViewById(R.id.show_main);
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform actions when the ConstraintLayout is clicked
+                viewModel.LoadWeather();
+            }
+        });
 
         viewModel.getWeatherData().observe(getViewLifecycleOwner(), new Observer<ApiData<Weather>>() {
             @Override
