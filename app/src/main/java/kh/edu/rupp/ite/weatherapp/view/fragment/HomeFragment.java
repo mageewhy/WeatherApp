@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.squareup.picasso.Picasso;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,8 +26,8 @@ import kh.edu.rupp.ite.weatherapp.R;
 import kh.edu.rupp.ite.weatherapp.databinding.FragmentHomeBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
-import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.ui.adapter.HourlyForecastAdapter;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 
@@ -32,7 +35,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     private final WeatherViewModel viewModel = new WeatherViewModel();
-
+    private final HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter();
+    private LocalDateTime currentTime = LocalDateTime.now();
     private String temp;
     private String speed;
 
@@ -40,6 +44,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        binding.recyclerHourlyForecast.setAdapter(hourlyForecastAdapter);
+
         viewModel.LoadWeather(getContext());
         return binding.getRoot();
     }
@@ -114,9 +121,44 @@ public class HomeFragment extends Fragment {
     private void ShowHourlyCastList(List<Hour> hours) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerHourlyForecast.setLayoutManager(gridLayoutManager);
+
         HourlyForecastAdapter adapter = new HourlyForecastAdapter();
-        adapter.submitList(hours);
+
+        LocalDateTime currentHour = LocalDateTime.now();
+        List<Hour> reorderedHours = reorderHoursList(currentHour, hours);
+
+        adapter.submitList(reorderedHours);
         binding.recyclerHourlyForecast.setAdapter(adapter);
     }
+
+    private List<Hour> reorderHoursList(LocalDateTime currentHour, List<Hour> hours) {
+        List<Hour> reorderedList = new ArrayList<>();
+        int currentHourIndex = -1;
+
+        // Find the index of the current hour in the original list
+        for (int i = 0; i < hours.size(); i++) {
+            LocalDateTime hourTime = LocalDateTime.parse(hours.get(i).getTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            if (hourTime.getHour() == currentHour.getHour()) {
+                currentHourIndex = i;
+                break;
+            }
+        }
+
+        if (currentHourIndex != -1) {
+            // Add hours from the current hour to the end of the list
+            for (int i = currentHourIndex; i < hours.size(); i++) {
+                reorderedList.add(hours.get(i));
+            }
+
+            // Add hours from the start to the current hour
+            for (int i = 0; i < currentHourIndex; i++) {
+                reorderedList.add(hours.get(i));
+            }
+        }
+
+        return reorderedList;
+    }
+
+
 
 }

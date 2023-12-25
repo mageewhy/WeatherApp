@@ -10,6 +10,7 @@
     <string name="speed">km/h</string>
     <string name="wind">----</string>
     <string name="hourly">Hourly Forecast</string>
+    <string name="weekly">Weekly Forecast</string>
     <string name="now">Now</string>
     <string name="ten">10 AM</string>
     <string name="eleven">11 AM</string>

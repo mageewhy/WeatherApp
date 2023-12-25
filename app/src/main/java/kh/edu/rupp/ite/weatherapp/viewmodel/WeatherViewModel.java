@@ -17,11 +17,10 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
@@ -40,7 +39,8 @@ public class WeatherViewModel extends ViewModel {
     private final MutableLiveData<ApiData<Weather>> _weatherData = new MutableLiveData<>();
     private final MutableLiveData<ApiData<List<Weather>>> _weatherLocationData = new MutableLiveData<>();
     private final List<Weather> weatherList = new ArrayList<>(); // For API responses
-    private final List<Weather> weatherListFromPrefs = new ArrayList<>(); // For SharedPreferences data
+    private List<Weather> weatherListFromPrefs = new ArrayList<>(); // For SharedPreferences data
+    private AtomicInteger counter;
 
     private final String apiKey = "25714936cd1e401ea1270735231610";
 
@@ -87,23 +87,7 @@ public class WeatherViewModel extends ViewModel {
         });
     }
 
-    public boolean isCityAlreadyExists(String cityName) {
-        for (Weather weather : weatherListFromPrefs) {
-            if (weather.getLocation().getName().equals(cityName)) {
-                return true; // City already exists
-            }
-        }
-        return false; // City doesn't exist
-    }
-
-
     public void LoadLocationData(Context context, String cityName) {
-
-        if (isCityAlreadyExists(cityName)) {
-            // Notify the user that the city already exists
-            Toast.makeText(context, "City already exists", Toast.LENGTH_SHORT).show();
-            return;
-        }
         ApiData<List<Weather>> weatherLocationData = new ApiData<List<Weather>>(Status.PROCESSING, null) {
         };
         _weatherLocationData.postValue(weatherLocationData);
@@ -117,33 +101,92 @@ public class WeatherViewModel extends ViewModel {
         APIService weatherApi = retrofit.create(APIService.class);
         Call<Weather> call = weatherApi.LoadCurrentLocationWeather(apiKey, cityName);
 
-        call.enqueue(new Callback<Weather>() {
-            @Override
-            public void onResponse(Call<Weather> call, Response<Weather> response) {
-                if (response.isSuccessful()) {
-                    Weather weather = response.body();
-                    weatherList.add(weather);
+            call.enqueue(new Callback<Weather>() {
+                @Override
+                public void onResponse(Call<Weather> call, Response<Weather> response) {
 
-                    ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.SUCCESS, weatherList);
-                    _weatherLocationData.postValue(locationAPIData);
+                    if (response.isSuccessful()) {
+                        Weather weather = response.body();
+                        weatherList.add(weather);
 
-                    // Save the weather data into SharedPreferences here
-                    saveWeatherDataToSharedPreferences(context, weatherList);
-                } else {
-                    // Handle the unsuccessful response
-                    ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.ERROR, null);
-                    _weatherLocationData.postValue(locationAPIData);
+                        handleRefreshCompletion(context, weatherList);
+                    }
+                    else {
+                        ApiData<List<Weather>> weatherLocationData = new ApiData<List<Weather>>(Status.ERROR, null) {
+                        };
+                        _weatherLocationData.postValue(weatherLocationData);
+                        Log.d("WeatherViewModel", "API call failed: ");
+                    }
+
+                    refreshLocationData(context);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Weather> call, Throwable t) {
-                // Handle the network failure
-                ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.ERROR, null);
-                _weatherLocationData.postValue(locationAPIData);
-                Log.d("WeatherViewModel", "API call failed: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Weather> call, Throwable t) {
+                    ApiData<List<Weather>> weatherLocationData = new ApiData<List<Weather>>(Status.ERROR, null) {
+                    };
+                    _weatherLocationData.postValue(weatherLocationData);
+                    Log.d("WeatherViewModel", "API call failed: " + t.getMessage());
+                }
+            });
+        }
+
+    // Method to refresh location data
+    private void RefreshLocationData(Context context) {
+        List<Weather> updatedWeatherList = new ArrayList<>();
+
+        // Retrofit initialization and API call for each city
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.weatherapi.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIService weatherApi = retrofit.create(APIService.class);
+
+
+        weatherListFromPrefs = getAllWeatherDataFromSharedPreferences(context);
+
+        for (Weather weather : weatherListFromPrefs) {
+            Call<Weather> call = weatherApi.LoadCurrentLocationWeather(apiKey, weather.getLocation().getName());
+
+            counter = new AtomicInteger(0);
+            call.enqueue(new Callback<Weather>() {
+                @Override
+                public void onResponse(Call<Weather> call, Response<Weather> response) {
+
+                    counter.incrementAndGet();
+                    if (response.isSuccessful()) {
+                        Weather updatedWeather = response.body();
+                        updatedWeatherList.add(updatedWeather);
+                        Log.d("RefreshedData", "Refreshing data: " + updatedWeatherList);
+
+                    }
+
+                    if (counter.get() == weatherListFromPrefs.size()) {
+                        handleRefreshCompletion(context, updatedWeatherList);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Weather> call, Throwable t) {
+                    counter.incrementAndGet();
+                    if (counter.get() == weatherListFromPrefs.size()) {
+                        handleRefreshCompletion(context, updatedWeatherList);
+                    }
+                    Log.d("WeatherViewModel", "API call failed: " + t.getMessage());
+                }
+            });
+        }
+    }
+
+    // Method to handle completion of data refresh
+    private void handleRefreshCompletion(Context context, List<Weather> updatedWeatherList) {
+        // Notify the LiveData with the updated data
+        ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.SUCCESS, updatedWeatherList);
+        _weatherLocationData.postValue(locationAPIData);
+
+        // Save the updated weather data into SharedPreferences here
+        saveWeatherDataToSharedPreferences(context, updatedWeatherList);
     }
 
     // Saving Weather data using Gson for serialization
@@ -157,47 +200,50 @@ public class WeatherViewModel extends ViewModel {
 
             WeatherPreference.getInstance(context).storeKey(cityName, weatherData);
         }
+        Log.d("SaveData", "Saving data:" + WeatherPreference.getInstance(context).getAll());
     }
 
-    public void removeWeatherDataFromSharedPreferences(Context context, String cityName) {
+    public void removeWeatherDataFromSharedPreferences(Context context, String cityName){
+
+        Gson gson = new Gson();
+
+        // Log data before removal
+        Log.d("BeforeRemoval", "Data before removal:");
+        List<Weather> beforeRemovalList = getAllWeatherDataFromSharedPreferences(context);
+        for (Weather weather : beforeRemovalList) {
+            Log.d("BeforeRemoval", gson.toJson(weather));
+        }
+
         WeatherPreference.getInstance(context).removeKey(cityName);
+
+        // Log data after removal
+        Log.d("AfterRemoval", "Data after removal:");
+        List<Weather> afterRemovalList = getAllWeatherDataFromSharedPreferences(context);
+        for (Weather weather : afterRemovalList) {
+            Log.d("AfterRemoval", gson.toJson(weather));
+        }
 
     }
 
     // Retrieving Weather data using Gson for deserialization
     public List<Weather> getAllWeatherDataFromSharedPreferences(Context context) {
-        Map<String, ?> allEntries = WeatherPreference.getInstance(context).getAll();
         Gson gson = new Gson();
+        Map<String, ?> allEntries = WeatherPreference.getInstance(context).getAll();
 
-        // Use a Set to track city names encountered
-        Set<String> cityNames = new HashSet<>();
         weatherListFromPrefs.clear();
 
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            String key = entry.getKey();
             String weatherJson = entry.getValue().toString();
             Weather weather = gson.fromJson(weatherJson, Weather.class);
-
-            // Check if the city name already exists, add to list if not a duplicate
-            if (!cityNames.contains(key)) {
-                cityNames.add(key);
-                weatherListFromPrefs.add(weather);
-            }
+            weatherListFromPrefs.add(weather);
         }
+        Log.d("GetAllList", "Get All Data:" + weatherListFromPrefs);
         return weatherListFromPrefs;
     }
 
     public void refreshLocationData(Context context) {
-        // Retrieve the data from SharedPreferences
-        List<Weather> updatedWeatherList = getAllWeatherDataFromSharedPreferences(context);
-
-        // Clear the existing weather list and update it with the refreshed data
-        weatherList.clear();
-        weatherList.addAll(updatedWeatherList);
-
-        // Notify observers about the updated data
-        ApiData<List<Weather>> locationAPIData = new ApiData<>(Status.REFRESHING, weatherList);
-        _weatherLocationData.postValue(locationAPIData);
+        RefreshLocationData(context);
+        Log.d("Context", "Context:" + context);
     }
 
     private String getCurrentLocationCityName(Context context) {
@@ -233,4 +279,5 @@ public class WeatherViewModel extends ViewModel {
         
         return cityName;
     }
+
 }
