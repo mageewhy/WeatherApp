@@ -8,7 +8,6 @@
     android:padding="20dp">
 
 
-
     <SearchView
         android:id="@+id/search_location"
         android:layout_width="match_parent"

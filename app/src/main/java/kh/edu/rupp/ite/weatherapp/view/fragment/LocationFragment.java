@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,23 +30,26 @@ import kh.edu.rupp.ite.weatherapp.databinding.FragmentLocationBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
 import kh.edu.rupp.ite.weatherapp.ui.adapter.LocationAdapter;
+import kh.edu.rupp.ite.weatherapp.utility.WeatherPreference;
 import kh.edu.rupp.ite.weatherapp.viewmodel.WeatherViewModel;
 
 
 public class LocationFragment extends Fragment {
 
     private FragmentLocationBinding binding;
-    private final LocationAdapter locationAdapter = new LocationAdapter(new ArrayList<>());
+    private final LocationAdapter locationAdapter = new LocationAdapter();
     private WeatherViewModel viewModel;
-    private final List<String> cityNames = new ArrayList<>();
-    private final String lastQuery = ""; // Track the last query
     private Parcelable recyclerViewState;
     private LinearLayoutManager layoutManager;
+    private WeatherPreference weatherPreference;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLocationBinding.inflate(inflater, container, false);
+        // Setup Recycler View
+        binding.recyclerLayout.setAdapter(locationAdapter);
+
         return binding.getRoot();
     }
 
@@ -60,10 +64,18 @@ public class LocationFragment extends Fragment {
         // Setup Recycler View
         binding.recyclerLayout.setAdapter(locationAdapter);
 
-        // on below line we are creating a method to create item touch helper
-        // method for adding swipe to delete functionality.
-        // in this we are specifying drag direction and position to right
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        // Retrieve the ViewModel from the parent activity
+        viewModel = new ViewModelProvider(requireActivity()).get(WeatherViewModel.class);
+        // Use the 'allWeatherData' list containing all the retrieved Weather objects as needed
+        List<Weather> allWeatherData = viewModel.getAllWeatherDataFromSharedPreferences(requireContext());
+        viewModel.getAllWeatherDataFromSharedPreferences(getContext());
+
+        // Set the retrieved weather data into the adapter
+        locationAdapter.setWeatherList(allWeatherData);
+        locationAdapter.notifyDataSetChanged();
+
+        // Method to create item touch helper
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 // this method is called when the item is moved.
@@ -72,38 +84,18 @@ public class LocationFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                // Get position of item
                 int position = viewHolder.getAdapterPosition();
-
-                // remove cityNames from list
                 String cityRemoved = locationAdapter.getCityNames().remove(position);
-//                Log.d("Removal", "Removed Item: " + cityRemoved);
-
-                // below line is to notify our item is removed from adapter.
                 locationAdapter.notifyItemRemoved(position);
 
-                // below line is to remove item from our array list.
-                viewModel.removeWeatherDataFromSharedPreferences(getContext(), cityRemoved);
+                // Remove from SharedPreferences and update ViewModel
+                viewModel.removeWeatherDataFromSharedPreferences(requireContext(), cityRemoved);
 
-                // Update the adapter's data after the removal
-                viewModel.getAllWeatherDataFromSharedPreferences(requireContext()); // Refresh data in ViewModel
-
-                // Call the refreshLocationData method to refresh the location data
                 viewModel.refreshLocationData(requireContext());
             }
             // Add to recycler view.
-        }).attachToRecyclerView(binding.recyclerLayout);
-
-        // Retrieve the ViewModel from the parent activity
-        viewModel = new ViewModelProvider(requireActivity()).get(WeatherViewModel.class);
-
-        // Use the 'allWeatherData' list containing all the retrieved Weather objects as needed
-        List<Weather> allWeatherData = viewModel.getAllWeatherDataFromSharedPreferences(requireContext());
-        viewModel.getAllWeatherDataFromSharedPreferences(getContext());
-
-        // Set the retrieved weather data into the adapter
-        locationAdapter.setWeatherList(allWeatherData);
-        locationAdapter.notifyDataSetChanged();
+        });
+        itemTouchHelper.attachToRecyclerView(binding.recyclerLayout);
 
         SearchView searchView = view.findViewById(R.id.search_location);
         searchView.setOnSearchClickListener(new View.OnClickListener() {
@@ -119,8 +111,14 @@ public class LocationFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Set the selected city name in the WeatherViewModel
-                viewModel.LoadLocationData(requireContext(), query);
+                weatherPreference = WeatherPreference.getInstance(getContext());
+                if(weatherPreference.getAllKeys().contains(query)){
+                    Toast.makeText(getContext(), "City Already Exists", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //Call LoadLocationData to call API
+                    viewModel.LoadLocationData(getContext(), query);
+                }
                 // Call the refreshLocationData method to refresh the location data
                 viewModel.refreshLocationData(requireContext());
 
@@ -130,9 +128,8 @@ public class LocationFragment extends Fragment {
 
                 // Clear the query in the SearchView
                 searchView.setQuery("", false);
+                searchView.clearFocus();
 
-                // Collapse the SearchView
-                searchView.onActionViewCollapsed();
                 return true;
             }
 
@@ -143,42 +140,41 @@ public class LocationFragment extends Fragment {
             }
         });
 
-        // Setup Observer
+        // Observing LiveData for weather location data
         viewModel.getWeatherLocationData().observe(getViewLifecycleOwner(), new Observer<ApiData<List<Weather>>>() {
             @Override
             public void onChanged(ApiData<List<Weather>> weatherApiData) {
-                // Set a delay (in milliseconds) after which the progress bar will be hidden
+                // Set Observer
                 int delayMillis = 1000;
                 switch (weatherApiData.getStatus()) {
                     case PROCESSING:
-//                        Toast.makeText(getContext(), "Fetching Data", Toast.LENGTH_LONG).show();
                         binding.progressBar.setVisibility(View.VISIBLE); // Show the progress bar
-
-                    case SUCCESS:
-                        binding.progressBar.setVisibility(View.GONE); // Hide the progress bar
-                        locationAdapter.setWeatherList(weatherApiData.getData());
-                        locationAdapter.notifyDataSetChanged();
                         break;
-                    case REFRESHING:
-//                        Toast.makeText(getContext(), "Refreshing Data", Toast.LENGTH_LONG).show();
+                    case SUCCESS:
                         binding.progressBar.setVisibility(View.VISIBLE); // Show the progress bar
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Hide the progress bar after the delay
-                                binding.progressBar.setVisibility(View.GONE);
-                            }
+                        new Handler().postDelayed(() -> {
+                            // Hide the progress bar after the delay
+                            binding.progressBar.setVisibility(View.GONE);
                         }, delayMillis);
-
                         locationAdapter.setWeatherList(weatherApiData.getData());
                         locationAdapter.notifyDataSetChanged();
 
+                        // Log the received data
+                        if (weatherApiData.getData() != null) {
+                            for (Weather weather : weatherApiData.getData()) {
+                                if (weather != null && weather.getLocation() != null) {
+                                    Log.d("LiveDataReceivedData", "Live Data City Name: " + weather.getLocation().getName());
+                                    Log.d("LiveDataReceivedData", "Live Data Current Time: " + weather.getLocation().getLocaltime());
+                                }
+                            }
+                        }
                         break;
                     case ERROR:
                         binding.progressBar.setVisibility(View.GONE); // Hide the progress bar on error
                         Toast.makeText(getContext(), "Network Failed", Toast.LENGTH_LONG).show();
                         break;
                 }
+
             }
         });
 
@@ -190,16 +186,9 @@ public class LocationFragment extends Fragment {
                 // Save the current RecyclerView state
                 recyclerViewState = layoutManager.onSaveInstanceState();
 
-                // Get the latest city name from your UI or pass it as an argument
-                locationAdapter.getCityNames();
-
                 // Call the refreshLocationData method to refresh the location data
                 viewModel.refreshLocationData(requireContext());
 
-                // Once the refresh is done, restore the RecyclerView state
-                if (recyclerViewState != null) {
-                    layoutManager.onRestoreInstanceState(recyclerViewState);
-                }
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

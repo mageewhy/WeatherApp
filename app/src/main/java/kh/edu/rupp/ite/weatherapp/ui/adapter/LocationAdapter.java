@@ -1,94 +1,106 @@
-    package kh.edu.rupp.ite.weatherapp.ui.adapter;
+package kh.edu.rupp.ite.weatherapp.ui.adapter;
 
-    import android.annotation.SuppressLint;
-    import android.view.LayoutInflater;
-    import android.view.View;
-    import android.view.ViewGroup;
-    import android.widget.ImageView;
-    import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-    import androidx.annotation.NonNull;
-    import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
-    import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Picasso;
 
-    import java.util.ArrayList;
-    import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
-    import kh.edu.rupp.ite.weatherapp.R;
-    import kh.edu.rupp.ite.weatherapp.model.api.model.Current;
-    import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
-    import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
-    import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
+import kh.edu.rupp.ite.weatherapp.databinding.RecylerItemBinding;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Current;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
+import kh.edu.rupp.ite.weatherapp.model.api.model.Weather;
+import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 
-    public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
-        private List<Weather> weatherListFromPrefs;
-        SettingPreference settingPreference;
+public class LocationAdapter extends ListAdapter<Weather, LocationAdapter.LocationViewHolder> {
+    SettingPreference settingPreference;
 
-        public LocationAdapter(List<Weather> weatherList) {
-            this.weatherListFromPrefs = weatherList;
-        }
-        public void setWeatherList(List<Weather> weatherList) {
-            this.weatherListFromPrefs = weatherList;
-        }
-        public List<String> getCityNames() {
-            List<String> cityNames = new ArrayList<>();
-            for (Weather weather : weatherListFromPrefs) {
-                Location location = weather.getLocation();
-                cityNames.add(location.getName());
+    public LocationAdapter() {
+        super(new DiffUtil.ItemCallback<Weather>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull Weather oldItem, @NonNull Weather newItem) {
+                return oldItem == newItem;
             }
-            return cityNames;
+
+            @Override
+            public boolean areContentsTheSame(@NonNull Weather oldItem, @NonNull Weather newItem) {
+                return oldItem.getLocation().getName().equals(newItem.getLocation().getName());
+            }
+        });
+    }
+
+    public void setWeatherList(List<Weather> weatherList) {
+        submitList(weatherList);
+    }
+
+    public List<String> getCityNames() {
+        List<String> cityNames = new ArrayList<>();
+        for (Weather weather : getCurrentList()) {
+            Location location = weather.getLocation();
+            cityNames.add(location.getName());
+        }
+        return cityNames;
+    }
+    @Override
+    public long getItemId(int position) {
+        // Return a unique ID for each item based on its position
+        return position;
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(true);
+    }
+
+    public void updateData(List<Weather> newData) {
+        submitList(newData); // Use submitList to update the data
+    }
+
+    @NonNull
+    @Override
+    public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        RecylerItemBinding binding = RecylerItemBinding.inflate(layoutInflater, parent, false);
+        return new LocationViewHolder(binding);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
+        Weather weather = getCurrentList().get(position);
+        holder.bind(weather, settingPreference);
+    }
+
+    public static class LocationViewHolder extends RecyclerView.ViewHolder {
+        private final RecylerItemBinding itemBinding;
+
+        public LocationViewHolder(RecylerItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.itemBinding = itemBinding;
         }
 
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_item, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @SuppressLint("DefaultLocale")
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Weather weather = weatherListFromPrefs.get(position);
+        public void bind(Weather weather, SettingPreference settingPreference) {
             Location location = weather.getLocation();
             Current current = weather.getCurrent();
 
-            // Get the SharedPreferences instance
-            settingPreference = SettingPreference.getInstance(holder.itemView.getContext());
+            itemBinding.cityName.setText(location.getName());
+            itemBinding.countryName.setText(location.getCountry());
+            itemBinding.dateTimezone.setText(location.getLocaltime());
+            Picasso.get().load(weather.getCurrent().getCondition().getIcon()).into(itemBinding.dynamicIconRcv);
+            // Adjust temperature based on settings
+            settingPreference = SettingPreference.getInstance(itemView.getContext());
             String temp = settingPreference.getKeyValue("temp");
-
-            holder.cityNameTextView.setText(location.getName());
-            holder.countryNameTextView.setText(location.getCountry());
-            holder.dateTimeZone.setText(location.getLocaltime());
-            Picasso.get().load(weather.getCurrent().getCondition().getIcon()).into(holder.iconImageView);
             if (temp.equals("°C")) {
-                holder.tempView.setText(String.format("%.1f°C", current.getTemp_c()));
+                itemBinding.tempView.setText(String.format("%.1f°C", current.getTemp_c()));
             } else {
-                holder.tempView.setText(String.format("%.1f°F", current.getTemp_f()));
+                itemBinding.tempView.setText(String.format("%.1f°F", current.getTemp_f()));
             }
         }
-
-        @Override
-        public int getItemCount() {
-            return weatherListFromPrefs.size();
-        }
-
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            TextView cityNameTextView;
-            TextView countryNameTextView;
-            TextView dateTimeZone;
-            TextView tempView;
-            ImageView iconImageView;
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-                cityNameTextView = itemView.findViewById(R.id.city_name);
-                countryNameTextView = itemView.findViewById(R.id.country_name);
-                dateTimeZone = itemView.findViewById(R.id.date_timezone);
-                iconImageView = itemView.findViewById(R.id.dynamic_icon_rcv);
-                tempView = itemView.findViewById(R.id.temp_view);
-            }
-        }
-
     }
+}
