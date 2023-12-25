@@ -8,7 +8,6 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -231,12 +230,13 @@ public class WeatherViewModel extends ViewModel {
 
     private String getCurrentLocationCityName(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        String defaultCityName = "Phnom Penh";
         String cityName = "";
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_PERMISSION_REQUEST_CODE);
-            cityName = "Phnom Penh";
+            cityName = defaultCityName;
             return cityName;
         }
 
@@ -256,7 +256,7 @@ public class WeatherViewModel extends ViewModel {
 
         } catch (IOException e) {}
         catch (NullPointerException e) {}
-        
+
         return cityName;
     }
 

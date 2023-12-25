@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
 
     private final WeatherViewModel viewModel = new WeatherViewModel();
     private final HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter();
-    private LocalDateTime currentTime = LocalDateTime.now();
+    private final LocalDateTime currentTime = LocalDateTime.now();
     private String temp;
     private String speed;
 
