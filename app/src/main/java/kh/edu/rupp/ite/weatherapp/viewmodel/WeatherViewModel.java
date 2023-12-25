@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import kh.edu.rupp.ite.weatherapp.BuildConfig;
 import kh.edu.rupp.ite.weatherapp.model.api.model.ApiData;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Location;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Status;
@@ -138,7 +139,7 @@ public class WeatherViewModel extends ViewModel {
 
         // Retrofit initialization and API call for each city
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.weatherapi.com/")
+                .baseUrl(BuildConfig.apiUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -244,8 +245,6 @@ public class WeatherViewModel extends ViewModel {
         android.location.Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
-        Log.d("lat", Double.toString(latitude));
-        Log.d("long", Double.toString(longitude));
 
         Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
 

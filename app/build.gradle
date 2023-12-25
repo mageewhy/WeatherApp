@@ -21,7 +21,41 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+
+        }
     }
+
+    flavorDimensions "weatherApp"
+
+    productFlavors {
+        uat {
+            dimension 'weatherApp'
+            resValue 'string', 'app_name', 'WeatherApp UAT'
+            buildConfigField 'String', 'apiUrl', '"https://api.weatherapi.com/"'
+        }
+        prd {
+            dimension 'weatherApp'
+            resValue 'string', 'app_name', 'WeatherApp'
+            buildConfigField 'String', 'apiUrl', '"https://api.weatherapi.com/"'
+        }
+    }
+
+    signingConfigs {
+        releaseUat {
+            storeFile file('weatherpass.keystore')
+            storePassword '089610078'
+            keyAlias 'weather-app'
+            keyPassword '089610078'
+        }
+        releasePrd {
+            storeFile file('weatherpass.keystore')
+            storePassword '089610078'
+            keyAlias 'weather-app'
+            keyPassword '089610078'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
