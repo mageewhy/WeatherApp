@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        viewModel.LoadWeather();
+        viewModel.LoadWeather(getContext());
         return binding.getRoot();
     }
 
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Perform actions when the ConstraintLayout is clicked
-                viewModel.LoadWeather();
+                viewModel.LoadWeather(getContext());
             }
         });
 

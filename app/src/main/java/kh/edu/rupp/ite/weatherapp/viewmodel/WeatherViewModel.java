@@ -1,18 +1,25 @@
 package kh.edu.rupp.ite.weatherapp.viewmodel;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Geocoder;
+import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,10 +47,12 @@ public class WeatherViewModel extends ViewModel {
     public LiveData<ApiData<List<Weather>>> getWeatherLocationData() {
         return _weatherLocationData;
     }
+
     public LiveData<ApiData<Weather>> getWeatherData() {
         return _weatherData;
     }
-    public void LoadWeather() {
+
+    public void LoadWeather(Context context) {
         ApiData<Weather> weatherApiData = new ApiData<>(Status.PROCESSING, null);
         _weatherData.postValue(weatherApiData);
 
@@ -54,15 +63,17 @@ public class WeatherViewModel extends ViewModel {
 
         APIService apiService = httpClient.create(APIService.class);
 
-        Call<Weather> weather = apiService.LoadWeather();
+        String citName = getCurrentLocationCityName(context);
+
+        Call<Weather> weather = apiService.LoadWeather(apiKey, citName);
 
         weather.enqueue(new Callback<Weather>() {
             @Override
             public void onResponse(Call<Weather> call, Response<Weather> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     ApiData<Weather> weatherApiData = new ApiData<>(Status.SUCCESS, response.body());
                     _weatherData.postValue(weatherApiData);
-                }else{
+                } else {
                     ApiData<Weather> weatherApiData = new ApiData<>(Status.ERROR, null);
                     _weatherData.postValue(weatherApiData);
                 }
@@ -148,7 +159,7 @@ public class WeatherViewModel extends ViewModel {
         }
     }
 
-    public void removeWeatherDataFromSharedPreferences(Context context, String cityName){
+    public void removeWeatherDataFromSharedPreferences(Context context, String cityName) {
         WeatherPreference.getInstance(context).removeKey(cityName);
 
     }
@@ -189,4 +200,37 @@ public class WeatherViewModel extends ViewModel {
         _weatherLocationData.postValue(locationAPIData);
     }
 
+    private String getCurrentLocationCityName(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        String cityName = "";
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            cityName = "Beijing";
+            return cityName;
+        }
+
+        android.location.Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        Log.d("lat", Double.toString(latitude));
+        Log.d("long", Double.toString(longitude));
+
+        Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+
+        try {
+            List<android.location.Address> address = geoCoder.getFromLocation(latitude, longitude, 1);
+
+            cityName = address.get(0).getLocality();
+
+        } catch (IOException e) {}
+        catch (NullPointerException e) {}
+        
+        return cityName;
+    }
 }
