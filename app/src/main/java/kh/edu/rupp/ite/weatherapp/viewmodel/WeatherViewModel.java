@@ -1,6 +1,7 @@
 package kh.edu.rupp.ite.weatherapp.viewmodel;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
@@ -8,6 +9,7 @@ import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -41,6 +43,7 @@ public class WeatherViewModel extends ViewModel {
     private final List<Weather> weatherList = new ArrayList<>(); // For API responses
     private List<Weather> weatherListFromPrefs = new ArrayList<>(); // For SharedPreferences data
     private AtomicInteger counter;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private final String apiKey = "25714936cd1e401ea1270735231610";
 
@@ -250,16 +253,13 @@ public class WeatherViewModel extends ViewModel {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         String cityName = "";
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            cityName = "Beijing";
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+            cityName = "Phnom Penh";
             return cityName;
         }
+
 
         android.location.Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         double latitude = location.getLatitude();
