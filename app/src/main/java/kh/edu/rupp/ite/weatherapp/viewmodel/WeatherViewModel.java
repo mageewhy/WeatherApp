@@ -205,7 +205,15 @@ public class WeatherViewModel extends ViewModel {
     }
 
     public void removeWeatherDataFromSharedPreferences(Context context, String cityName){
+
         WeatherPreference.getInstance(context).removeKey(cityName);
+
+        // Data after removal
+        List<Weather> afterRemovalList = getAllWeatherDataFromSharedPreferences(context);
+
+        // Update LiveData after removal
+        _weatherLocationData.postValue(new ApiData<>(Status.SUCCESS, afterRemovalList));
+
     }
 
     // Retrieving Weather data using Gson for deserialization
