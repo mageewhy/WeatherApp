@@ -3,7 +3,6 @@ package kh.edu.rupp.ite.weatherapp.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import kh.edu.rupp.ite.weatherapp.R;
@@ -39,8 +37,6 @@ public class LocationFragment extends Fragment {
     private FragmentLocationBinding binding;
     private final LocationAdapter locationAdapter = new LocationAdapter();
     private WeatherViewModel viewModel;
-    private Parcelable recyclerViewState;
-    private LinearLayoutManager layoutManager;
     private WeatherPreference weatherPreference;
 
     @Nullable
@@ -58,7 +54,7 @@ public class LocationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Create Layout Manager
-        layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerLayout.setLayoutManager(layoutManager);
 
         // Setup Recycler View
@@ -183,9 +179,6 @@ public class LocationFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Save the current RecyclerView state
-                recyclerViewState = layoutManager.onSaveInstanceState();
-
                 // Call the refreshLocationData method to refresh the location data
                 viewModel.refreshLocationData(requireContext());
 
