@@ -24,6 +24,9 @@
     <style name="CardView.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
         <item name="android:background">@drawable/card_view_dropshadow_w</item>
     </style>
+    <style name="HomeCardView.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
+        <item name="android:background">@drawable/home_weather_card_w</item>
+    </style>
 
     <style name="Search.Theme.WeatherApp" parent="Base.Theme.WeatherApp">
         <item name="android:backgroundTint">@color/white</item>

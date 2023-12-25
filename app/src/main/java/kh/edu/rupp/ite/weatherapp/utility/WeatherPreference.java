@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.Map;
+import java.util.Set;
 
 public class WeatherPreference {
     private static WeatherPreference instance;
@@ -35,7 +36,9 @@ public class WeatherPreference {
     public Map<String, ?> getAll() {
         return sp.getAll();
     }
-
+    public Set<String> getAllKeys() {
+        return sp.getAll().keySet();
+    }
     public void removeKey(String key) {
         sp.edit().remove(key).apply();
     }
