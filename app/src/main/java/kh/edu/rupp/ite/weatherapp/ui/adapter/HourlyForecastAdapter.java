@@ -17,9 +17,11 @@ import java.time.format.DateTimeFormatter;
 import kh.edu.rupp.ite.weatherapp.databinding.ViewHolderHourlyForecastBinding;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Forecast;
 import kh.edu.rupp.ite.weatherapp.model.api.model.Hour;
+import kh.edu.rupp.ite.weatherapp.utility.SettingPreference;
 
 public class HourlyForecastAdapter extends ListAdapter<Hour, HourlyForecastAdapter.HourlyForecastViewHolder> {
 
+    private SettingPreference settingPreference;
     public HourlyForecastAdapter() {
         super(new DiffUtil.ItemCallback<Hour>() {
             @Override
@@ -49,7 +51,7 @@ public class HourlyForecastAdapter extends ListAdapter<Hour, HourlyForecastAdapt
     public void onBindViewHolder(@NonNull HourlyForecastViewHolder holder, int position) {
 
         Hour hour = getItem(position);
-        holder.bind(hour);
+        holder.bind(hour, settingPreference);
 
     }
 
@@ -62,13 +64,21 @@ public class HourlyForecastAdapter extends ListAdapter<Hour, HourlyForecastAdapt
             this.itemBinding = itemBinding;
         }
 
-        public void bind(Hour hour) {
+        public void bind(Hour hour, SettingPreference settingPreference) {
             LocalDateTime dateTime = LocalDateTime.parse(hour.getTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             String timeString = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+            // Get the SharedPreferences instance
+            settingPreference = SettingPreference.getInstance(itemBinding.getRoot().getContext());
+            String temp = settingPreference.getKeyValue("temp");
 
             itemBinding.txt1.setText(timeString);
             Picasso.get().load(hour.getCondition().getIcon()).into(itemBinding.img1);
-            itemBinding.txt2.setText(Float.toString(hour.getTemp_c()));
+            if (temp.equals("°C")) {
+                itemBinding.txt2.setText(String.format("%.1f°C", hour.getTemp_c()));
+            } else {
+                itemBinding.txt2.setText(String.format("%.1f°F", hour.getTemp_f()));
+            }
+
         }
 
     }

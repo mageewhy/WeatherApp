@@ -21,6 +21,7 @@
 <!--    <color name="card_view_outside_w">#3BFFFFFF</color>-->
     <color name="card_view_inside_w">#E2FFFFFF</color>
 
+    <color name="progress_bar">#30FFBD</color>
 
 
 </resources>

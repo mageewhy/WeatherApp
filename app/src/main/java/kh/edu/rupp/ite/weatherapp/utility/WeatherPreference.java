@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class WeatherPreference {
     private static WeatherPreference instance;
-    private SharedPreferences sp;
+    private final SharedPreferences sp;
     private WeatherPreference(Context context) {
         sp = context.getSharedPreferences("myWeatherData", Context.MODE_PRIVATE);
     }
