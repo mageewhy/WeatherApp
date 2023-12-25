@@ -38,8 +38,8 @@ public class LocationAdapter extends ListAdapter<Weather, LocationAdapter.Locati
 
     public void setWeatherList(List<Weather> weatherList) {
         submitList(weatherList);
+        notifyDataSetChanged();
     }
-
     public List<String> getCityNames() {
         List<String> cityNames = new ArrayList<>();
         for (Weather weather : getCurrentList()) {
@@ -57,10 +57,6 @@ public class LocationAdapter extends ListAdapter<Weather, LocationAdapter.Locati
     @Override
     public void setHasStableIds(boolean hasStableIds) {
         super.setHasStableIds(true);
-    }
-
-    public void updateData(List<Weather> newData) {
-        submitList(newData); // Use submitList to update the data
     }
 
     @NonNull

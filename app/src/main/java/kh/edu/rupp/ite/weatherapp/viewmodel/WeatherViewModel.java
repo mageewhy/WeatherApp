@@ -7,9 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -118,7 +116,7 @@ public class WeatherViewModel extends ViewModel {
                         ApiData<List<Weather>> weatherLocationData = new ApiData<List<Weather>>(Status.ERROR, null) {
                         };
                         _weatherLocationData.postValue(weatherLocationData);
-                        Log.d("WeatherViewModel", "API call failed: ");
+//                        Log.d("WeatherViewModel", "API call failed: ");
                     }
 
                     refreshLocationData(context);
@@ -129,7 +127,7 @@ public class WeatherViewModel extends ViewModel {
                     ApiData<List<Weather>> weatherLocationData = new ApiData<List<Weather>>(Status.ERROR, null) {
                     };
                     _weatherLocationData.postValue(weatherLocationData);
-                    Log.d("WeatherViewModel", "API call failed: " + t.getMessage());
+//                    Log.d("WeatherViewModel", "API call failed: " + t.getMessage());
                 }
             });
         }
@@ -161,7 +159,7 @@ public class WeatherViewModel extends ViewModel {
                     if (response.isSuccessful()) {
                         Weather updatedWeather = response.body();
                         updatedWeatherList.add(updatedWeather);
-                        Log.d("RefreshedData", "Refreshing data: " + updatedWeatherList);
+//                        Log.d("RefreshedData", "Refreshing data: " + updatedWeatherList);
 
                     }
 
@@ -203,29 +201,11 @@ public class WeatherViewModel extends ViewModel {
 
             WeatherPreference.getInstance(context).storeKey(cityName, weatherData);
         }
-        Log.d("SaveData", "Saving data:" + WeatherPreference.getInstance(context).getAll());
+//        Log.d("SaveData", "Saving data:" + WeatherPreference.getInstance(context).getAll());
     }
 
     public void removeWeatherDataFromSharedPreferences(Context context, String cityName){
-
-        Gson gson = new Gson();
-
-        // Log data before removal
-        Log.d("BeforeRemoval", "Data before removal:");
-        List<Weather> beforeRemovalList = getAllWeatherDataFromSharedPreferences(context);
-        for (Weather weather : beforeRemovalList) {
-            Log.d("BeforeRemoval", gson.toJson(weather));
-        }
-
         WeatherPreference.getInstance(context).removeKey(cityName);
-
-        // Log data after removal
-        Log.d("AfterRemoval", "Data after removal:");
-        List<Weather> afterRemovalList = getAllWeatherDataFromSharedPreferences(context);
-        for (Weather weather : afterRemovalList) {
-            Log.d("AfterRemoval", gson.toJson(weather));
-        }
-
     }
 
     // Retrieving Weather data using Gson for deserialization
@@ -240,23 +220,23 @@ public class WeatherViewModel extends ViewModel {
             Weather weather = gson.fromJson(weatherJson, Weather.class);
             weatherListFromPrefs.add(weather);
         }
-        Log.d("GetAllList", "Get All Data:" + weatherListFromPrefs);
+//        Log.d("GetAllList", "Get All Data:" + weatherListFromPrefs);
         return weatherListFromPrefs;
     }
 
     public void refreshLocationData(Context context) {
         RefreshLocationData(context);
-        Log.d("Context", "Context:" + context);
     }
 
     private String getCurrentLocationCityName(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        String defaultCityName = "Phnom Penh";
         String cityName = "";
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_PERMISSION_REQUEST_CODE);
-            cityName = "Phnom Penh";
+            cityName = defaultCityName;
             return cityName;
         }
 
@@ -276,7 +256,7 @@ public class WeatherViewModel extends ViewModel {
 
         } catch (IOException e) {}
         catch (NullPointerException e) {}
-        
+
         return cityName;
     }
 
