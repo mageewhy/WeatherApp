@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
 
         binding.recyclerHourlyForecast.setAdapter(hourlyForecastAdapter);
 
-        viewModel.LoadWeather();
+        viewModel.LoadWeather(getContext());
         return binding.getRoot();
     }
 
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Perform actions when the ConstraintLayout is clicked
-                viewModel.LoadWeather();
+                viewModel.LoadWeather(getContext());
             }
         });
 
